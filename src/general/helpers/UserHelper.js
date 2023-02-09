@@ -8,7 +8,7 @@ import moment from 'moment';
 const UserHelper = {
     // Get random avatar url
     getRandomAvatarUrl: () => {
-        return 'https://blenderartists.org/uploads/default/original/4X/6/a/d/6adcaac6f7378fbf998f5ea0490724cea82eb01f.jpeg';
+        return 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
     },
 
     // Check access token valid
@@ -63,6 +63,18 @@ const UserHelper = {
             return Utils.getFullUrl(avatar);
         } else {
             return AppResource.images.imgDefaultAvatar;
+        }
+    },
+    renderGender: (gender) => {
+        switch (gender) {
+            case "Nam":
+                return "Nam";
+            case "Nữ":
+                return "Nữ";
+            case "Khác":
+                return "Khác";
+            default:
+                break;
         }
     },
 };

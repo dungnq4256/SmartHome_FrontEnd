@@ -21,7 +21,7 @@ function SignUpScreen(props) {
     const formik = useFormik({
         initialValues: {
             fullname: '',
-            email: '',
+            username: '',
             password: '',
             confirmPassword: '',
         },
@@ -36,7 +36,7 @@ function SignUpScreen(props) {
             try {
                 const res = await authApi.signUp(params);
                 if (res) {
-                    localStorage.setItem(PreferenceKeys.savedEmail, values.email);
+                    localStorage.setItem(PreferenceKeys.savedUsername, values.username);
                     localStorage.setItem(PreferenceKeys.savedPassword, /*values.password*/ '');
                     ToastHelper.showSuccess('Đăng ký tài khoản mới thành công');
                     navigate('/sign-in');
@@ -46,7 +46,7 @@ function SignUpScreen(props) {
             }
         },
         validationSchema: Yup.object({
-            email: Yup.string().required('Bạn chưa nhập email').email('Email không hợp lệ'),
+            username: Yup.string().required('Bạn chưa nhập tài khoản'),
             password: Yup.string().required('Bạn chưa nhập mật khẩu').min(6, 'Mật khẩu phải chứa ít nhất 6 kí tự').matches(/^\S*$/, 'Mật khẩu không được chứa khoảng trắng'),
             fullname: Yup.string().required('Bạn chưa nhập họ tên'),
             confirmPassword: Yup.string()
@@ -78,12 +78,12 @@ function SignUpScreen(props) {
                             </div>
                             <div>
                                 <BaseTextField 
-                                    name='email'
-                                    placeholder='hi@example.com'
-                                    label='Email'
-                                    fieldHelper={formik.getFieldHelpers('email')}
-                                    fieldProps={formik.getFieldProps('email')}
-                                    fieldMeta={formik.getFieldMeta('email')}
+                                    name='username'
+                                    placeholder='Nhập tài khoản...'
+                                    label='Tài khoản'
+                                    fieldHelper={formik.getFieldHelpers('username')}
+                                    fieldProps={formik.getFieldProps('username')}
+                                    fieldMeta={formik.getFieldMeta('username')}
                                 />
                             </div>
                             <div>
@@ -108,7 +108,6 @@ function SignUpScreen(props) {
                                     fieldMeta={formik.getFieldMeta('confirmPassword')}
                                 />
                             </div>
-                            <div className="text-center font-weight-bolder cursor-pointer text-center" style={{color: AppResource.colors.featureColor}} >Quên mật khẩu ?</div>
                             <AppButton 
                                 className="btn-blue mt-5 w-100"
                                 text="Đăng ký"

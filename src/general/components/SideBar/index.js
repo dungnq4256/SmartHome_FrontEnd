@@ -1,9 +1,11 @@
+import { thunkSignOut } from "app/authSlice";
 import { LogoLight } from "assets/icons/Icons";
 import UserHelper from "general/helpers/UserHelper";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import BasePopup from "../BasePopup";
+import DialogModal from "../DialogModal";
 import "./style.scss";
 
 SideBar.propTypes = {
@@ -24,15 +26,17 @@ SideBar.defaultProps = {
 function SideBar(props) {
     const { className, selected, showSideBarMobile } = props;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const loggedIn = UserHelper.checkAccessTokenValid();
+    const { currentAccount } = useSelector((state) => state?.auth);
+    const { currentHome } = useSelector(
+        (state) => state?.home
+    );
     let [showSideBar, setShowSideBar] = useState(true);
-    let [showPopupLogOut, setShowPopupLogOut] = useState(false);
+    let [showLogOutModal, setShowLogOutModal] = useState(false);
 
     const handleShowSideBar = () => {
         setShowSideBar(!showSideBar);
-    };
-    const handleShowPopupLogOut = () => {
-        setShowPopupLogOut(!showPopupLogOut);
     };
     function handleNavigate(url) {
         navigate(url);
@@ -69,7 +73,7 @@ function SideBar(props) {
             </div>
             <div className="d-flex flex-column flex-fill align-items-center w-100">
                 <div className="MenuSideBar w-100 mt-5">
-                    <div onClick={() => handleNavigate("/")}>
+                    <div onClick={() => currentHome.name ? handleNavigate("/home") : handleNavigate("/")}>
                         <div
                             className="MenuItemHome d-flex align-items-center"
                             title="Nhà"
@@ -83,7 +87,7 @@ function SideBar(props) {
                                     !showSideBar && "SideBar_active"
                                 }`}
                             >
-                                <b className="pr-2">Nhà:</b> Dung's House
+                                <b className="pr-2">Nhà:</b> {currentHome?.name}
                             </div>
                             <div
                                 className={`ArrowItem ${
@@ -94,7 +98,7 @@ function SideBar(props) {
                             </div>
                         </div>
                     </div>
-                    <div onClick={() => handleNavigate("/rooms-list")}>
+                    <div onClick={() => currentHome.name ? handleNavigate("/rooms-list") : handleNavigate("/")}>
                         <div
                             className={`MenuItem d-flex align-items-center ${
                                 selected === "rooms-list" && "MenuItem_active"
@@ -111,7 +115,7 @@ function SideBar(props) {
                             </div>
                         </div>
                     </div>
-                    <div onClick={() => handleNavigate("/devices-list")}>
+                    <div onClick={() => currentHome.name ? handleNavigate("/devices-list") : handleNavigate("/")}>
                         <div
                             className={`MenuItem d-flex align-items-center ${
                                 selected === "devices-list" && "MenuItem_active"
@@ -152,7 +156,7 @@ function SideBar(props) {
                                     !showSideBar && "SideBar_active"
                                 }`}
                             >
-                                Nguyễn Quang Dũng
+                                {currentAccount?.fullname}
                             </div>
                             <div
                                 className={`ArrowItem ${
@@ -163,7 +167,7 @@ function SideBar(props) {
                             </div>
                         </div>
                     </div>
-                    <div onClick={handleShowPopupLogOut}>
+                    <div onClick={() => setShowLogOutModal(true)}>
                         <div
                             className="MenuItem MenuItem_active"
                             style={{ height: "40px" }}
@@ -183,14 +187,18 @@ function SideBar(props) {
                     </div>
                 </div>
             </div>
-            {showPopupLogOut && (
-                <BasePopup
-                    title="Đăng xuất"
-                    icon="fas fa-sign-out-alt"
-                    description="Bạn có chắc chắn muốn đăng xuất?"
-                    funcOut={handleShowPopupLogOut}
-                />
-            )}
+            <DialogModal
+                show={showLogOutModal}
+                onClose={() => setShowLogOutModal(false)}
+                icon="fad fa-user text-info"
+                title="Đăng xuất"
+                description="Bạn có chắc chắn muốn đăng xuất?"
+                onExecute={() => {
+                    dispatch(thunkSignOut()).then(() => {
+                        UserHelper.signOut();
+                    });
+                }}
+            />
         </div>
     );
 }

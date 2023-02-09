@@ -4,8 +4,10 @@ const PreferenceKeys = {
     accessToken: 'accessToken',
     accessTokenExpired: 'accessToken_expired',
     // login info
-    savedLoginEmail: 'econtract_saved_login_email',
+    savedLoginUsername: 'econtract_saved_login_username',
     savedLoginPassword: 'econtract_saved_login_password',
+    // home
+    currentHome_id: 'currentHome_id',
 };
 
 export default PreferenceKeys;

@@ -1,5 +1,7 @@
 // Import reducers
 import authReducer from "./authSlice";
+import homeReducer from "../features/Home/homeSlice";
+import roomReducer from "../features/Room/roomSlice";
 
 const {
   configureStore
@@ -8,6 +10,8 @@ const {
 // root reducer
 const rootReducer = {
   auth: authReducer,
+  home: homeReducer,
+  room: roomReducer,
 };
 
 // app store

@@ -3,6 +3,7 @@ import moment from "moment";
 import hmacSHA512 from 'crypto-js/hmac-sha512';
 import Base64 from 'crypto-js/enc-base64';
 import _ from 'lodash';
+import axios from "axios";
 
 // Util functions
 const Utils = {
@@ -196,7 +197,26 @@ const Utils = {
         }
     }
     return object;
-}
+},
+
+uploadCloudinary: async (file) => {
+  try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "SmartHome");
+      const res = await axios.post("https://api.cloudinary.com/v1_1/dauptgx4q/upload", formData);
+      console.log(res);
+      if (res) {
+          return res;
+      }
+  } catch (error) {
+      console.log({
+          result: "failed",
+          message: "Upload file to cloudinary failed",
+          reason: error.message,
+      });
+  }
+},
 };
 
 export default Utils;

@@ -15,7 +15,7 @@ const authApi = {
 
     //getAccountInfor
     getAccountInfor: () => {
-        const url = '/account/profile';
+        const url = '/account/detail';
         return axiosClient.get(url);
     },
 

@@ -34,7 +34,7 @@
 }
 
 .ButtonPrimary {
-    background-color: #3E97FF !important;
+    background-color: #3E97FF;
     color: #fff;
     font-size: 12px;
     font-weight: 600;
@@ -43,12 +43,26 @@
     border-radius: 5px;
 
     &:hover {
-        background-color: #6fb2ff !important;
+        background-color: #6fb2ff;
+    }
+}
+
+.ButtonDanger{
+    background-color: #c92f2f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: #bf3e3e;
     }
 }
 
 .ButtonSecondary {
-    background-color: #eaeaea !important;
+    background-color: #eaeaea ;
     color: #1682FD;
     font-size: 12px;
     font-weight: 600;
@@ -57,12 +71,12 @@
     border-radius: 5px;
 
     &:hover {
-        background-color: rgb(211, 219, 250) !important;
+        background-color: rgb(211, 219, 250) ;
     }
 }
 
 .ButtonCancel {
-    background-color: #eaeaea !important;
+    background-color: #eaeaea ;
     color: #303030;
     font-size: 12px;
     font-weight: 600;
@@ -71,6 +85,6 @@
     border-radius: 5px;
 
     &:hover {
-        background-color: rgb(206, 206, 206) !important;
+        background-color: rgb(206, 206, 206) ;
     }
 }

@@ -117,7 +117,7 @@
 
 @media only screen and (max-width: 992px) {
     .SideBar {
-        position: absolute;
+        position: fixed;
         left: -100%;
     }
 }

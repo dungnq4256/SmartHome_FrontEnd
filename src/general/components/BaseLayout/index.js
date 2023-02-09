@@ -18,7 +18,6 @@ BaseLayout.defaultProps = {
 function BaseLayout(props) {
     const { selected } = props;
     const isAuth = UserHelper.checkAccessTokenValid();
-
     const PageUp = useRef();
     const handleScrollTop = () => {
         document.documentElement.scrollTop = 0;
@@ -30,7 +29,7 @@ function BaseLayout(props) {
             PageUp.current.style.animation = "scroll-to-top-animation 0.5s";
         }
     };
-    const [showSideBarMobile, setShowSideBarMobile] = useState(false)
+    const [showSideBarMobile, setShowSideBarMobile] = useState(false);
 
     const callbackFunction = (value) => {
       setShowSideBarMobile(!value)
@@ -44,7 +43,7 @@ function BaseLayout(props) {
             
             <div className='d-flex flex-column flex-grow-1' >
                 {/* header */}
-                <HeaderLandingPage logo={false} showSideBarMobile={showSideBarMobile} parentCallback={callbackFunction}/>
+                <HeaderLandingPage showSideBarMobile={showSideBarMobile} parentCallback={callbackFunction}/>
                 <div onClick={() => setShowSideBarMobile(false)}>
                     {/* Content */}
                     <div

@@ -10,11 +10,16 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignInScreen from "features/Auth/SignInScreen";
 import SignUpScreen from "features/Auth/SignUpScreen";
-import HomeScreen from "features/HomeScreen";
+import HomeScreen from "features/Home/Screens/HomeScreen";
 import GuestRoute from "general/components/AppRoutes/GuestRoute";
 import PrivateRoute from "general/components/AppRoutes/PrivateRoute";
-import RoomsListScreen from "features/RoomsListScreen";
-import DevicesListScreen from "features/DevicesListScreen";
+import RoomsListScreen from "features/Room/RoomsListScreen";
+import DevicesListScreen from "features/Device/DevicesListScreen";
+import Dashboard from "features/Dashboard";
+import UserHelper from "general/helpers/UserHelper";
+import AccountListener from "features/Account/AccountListener";
+import Account from "features/Account";
+import HomeListener from "features/Home/HomeListener";
 // import Admin from "Admin";
 
 // Load BS
@@ -49,6 +54,7 @@ function App() {
         };
     }, []);
     // const auth = useSelector((state) => state?.auth?.loggedIn);
+    // const auth = UserHelper.checkAccessTokenValid();
 
     return (
         <>
@@ -61,21 +67,42 @@ function App() {
                         {/* Admin */}
                         {/* <Route path="/admin/*" element={<Admin />} /> */}
 
-                        {/* Landing Page */}
-
                         {/* Dashboard */}
                         <Route
                             path=""
                             element={
                                 // auth ? (
-                                //   <PrivateRoute>
-                                // <PrivateRoute>
-                                <HomeScreen />
-                                // </PrivateRoute>
-                                //   {/* </PrivateRoute>
+                                <PrivateRoute>
+                                    <Dashboard />
+                                </PrivateRoute>
                                 // ) : (
-                                //   <HomeScreen />
-                                // ) */}
+                                //     <SignInScreen />
+                                // )
+                            }
+                        />
+                        <Route
+                            path="dashboard"
+                            element={
+                                // auth ? (
+                                <PrivateRoute>
+                                    <Dashboard />
+                                </PrivateRoute>
+                                // ) : (
+                                //     <SignInScreen />
+                                // )
+                            }
+                        />
+                        {/* Home */}
+                        <Route
+                            path="home"
+                            element={
+                                // auth ? (
+                                <PrivateRoute>
+                                    <HomeScreen />
+                                </PrivateRoute>
+                                // ) : (
+                                //     <SignInScreen />
+                                // )
                             }
                         />
 
@@ -83,14 +110,12 @@ function App() {
                             path="rooms-list"
                             element={
                                 // auth ? (
-                                //   <PrivateRoute>
-                                // <PrivateRoute>
-                                <RoomsListScreen />
-                                // </PrivateRoute>
-                                //   {/* </PrivateRoute>
+                                <PrivateRoute>
+                                    <RoomsListScreen />
+                                </PrivateRoute>
                                 // ) : (
-                                //   <HomeScreen />
-                                // ) */}
+                                //     <SignInScreen />
+                                // )
                             }
                         />
 
@@ -98,26 +123,24 @@ function App() {
                             path="devices-list"
                             element={
                                 // auth ? (
-                                //   <PrivateRoute>
-                                // <PrivateRoute>
-                                <DevicesListScreen />
-                                // </PrivateRoute>
-                                //   {/* </PrivateRoute>
+                                <PrivateRoute>
+                                    <DevicesListScreen />
+                                </PrivateRoute>
                                 // ) : (
-                                //   <HomeScreen />
-                                // ) */}
+                                //     <SignInScreen />
+                                // )
                             }
                         />
 
                         {/* Account */}
                         <Route
-              path="account/*"
-              element={
-                <PrivateRoute>
-                  {/* <Profile /> */}
-                </PrivateRoute>
-              }
-            />
+                            path="account/*"
+                            element={
+                                <PrivateRoute>
+                                    <Account />
+                                </PrivateRoute>
+                            }
+                        />
                         {/* Sign in */}
                         <Route
                             path="/sign-in"
@@ -169,7 +192,8 @@ function App() {
             {/* Listener */}
             {/* <DataCommonListener /> */}
             {/* Account Listener */}
-            {/* <AccountListener /> */}
+            <AccountListener />
+            <HomeListener />
             {/* <DashboardListener /> */}
             {/* Firebase Listener */}
             {/* <FirebaseListener /> */}

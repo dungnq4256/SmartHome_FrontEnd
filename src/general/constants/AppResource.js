@@ -12,7 +12,8 @@ const AppResource = {
    imgPageNotFound: require('assets/images/Page-not-found.png'),
   },
   icons: {
-    icPageUp: require('assets/icons/PageUp.png')
+    icPageUp: require('assets/icons/PageUp.png'),
+    icTrash: require("assets/icons/ic_trash.png"),
   },
 
   // colors

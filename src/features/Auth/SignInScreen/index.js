@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import "./style.scss";
 import BaseTextField from "general/components/Form/BaseTextField";
 import { useFormik } from "formik";
-import HeaderLandingPage from "general/components/HeaderLandingPage";
 import AppButton from "general/components/AppButton";
 import Utils from "general/utils/Utils";
 import * as Yup from "yup";
@@ -26,7 +25,7 @@ function SignInScreen(props) {
 
     const formik = useFormik({
         initialValues: {
-            email: "",
+            username: "",
             password: "",
         },
         onSubmit: async (values) => {
@@ -46,10 +45,9 @@ function SignInScreen(props) {
             }
         },
         validationSchema: Yup.object({
-            email: Yup.string()
+            username: Yup.string()
                 .trim()
-                .required("Bạn chưa nhập email")
-                .email("Email không hợp lệ"),
+                .required("Bạn chưa nhập tài khoản"),
             password: Yup.string().trim().required("Bạn chưa nhập mật khẩu"),
         }),
     });
@@ -66,15 +64,15 @@ function SignInScreen(props) {
             <form className="SignInForm" onSubmit={formik.handleSubmit}>
                 <div>
                     <h1 style={{fontWeight:"600", textAlign:"center"}}>Đăng nhập</h1>
-                    {/* email input */}
+                    {/* username input */}
                     <div>
                         <BaseTextField
-                            name="email"
-                            placeholder="Nhập email..."
-                            label="Email"
-                            fieldHelper={formik.getFieldHelpers("email")}
-                            fieldProps={formik.getFieldProps("email")}
-                            fieldMeta={formik.getFieldMeta("email")}
+                            name="username"
+                            placeholder="Nhập tài khoản..."
+                            label="Tài khoản"
+                            fieldHelper={formik.getFieldHelpers("username")}
+                            fieldProps={formik.getFieldProps("username")}
+                            fieldMeta={formik.getFieldMeta("username")}
                         />
                     </div>
 
@@ -91,12 +89,12 @@ function SignInScreen(props) {
                         />
                     </div>
 
-                    <div
+                    {/* <div
                         className="text-center font-weight-bolder cursor-pointer text-center"
                         style={{ color: AppResource.colors.featureColor }}
                     >
                         Quên mật khẩu ?
-                    </div>
+                    </div> */}
 
                     {/* sign in button */}
                     <AppButton
