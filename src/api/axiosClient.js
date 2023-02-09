@@ -14,7 +14,7 @@ const sTag = '[AxiosClient]';
 // Tham khao: `https://github.com/axios/axios#request-config` 
 // de xem chi tiet
 const axiosClient = axios.create({
-    baseURL: "https://smarthome-backend.vercel.app/api",
+    baseURL: 'https://smarthome-backend.vercel.app/api',
     headers: {
         'content-type': 'application/json'
     },
