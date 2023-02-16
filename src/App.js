@@ -1,6 +1,5 @@
 // Toast
-import store from "app/store";
-import AppToast from "general/components/AppToast";
+import React from 'react'
 import { Suspense, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 // router
@@ -12,34 +11,19 @@ import SignInScreen from "features/Auth/SignInScreen";
 import SignUpScreen from "features/Auth/SignUpScreen";
 import HomeScreen from "features/Home/Screens/HomeScreen";
 import GuestRoute from "general/components/AppRoutes/GuestRoute";
-import PrivateRoute from "general/components/AppRoutes/PrivateRoute";
 import RoomsListScreen from "features/Room/RoomsListScreen";
 import DevicesListScreen from "features/Device/DevicesListScreen";
 import Dashboard from "features/Dashboard";
-import UserHelper from "general/helpers/UserHelper";
 import AccountListener from "features/Account/AccountListener";
 import Account from "features/Account";
-import HomeListener from "features/Home/HomeListener";
-// import Admin from "Admin";
+import HomeListener from 'features/Home/HomeListener';
+import AppToast from 'general/components/AppToast';
+import PrivateRoute from 'general/components/AppRoutes/PrivateRoute';
+import RequestToResetPass from 'features/Auth/RequestToResetPass';
 
 // Load BS
 
 require("bootstrap/dist/js/bootstrap.min");
-// Load KT plugins
-// require("assets/plugins/ktutil");
-// require("assets/plugins/ktmenu");
-// require("assets/plugins/ktoffcanvas");
-// require("assets/plugins/ktcookie");
-// require("assets/plugins/kttoggle");
-// // aside
-// require("assets/plugins/aside/aside");
-// require("assets/plugins/aside/aside-menu");
-// require("assets/plugins/aside/aside-toggle");
-// // header
-// require("assets/plugins/header/ktheader-mobile");
-// require("assets/plugins/header/ktheader-topbar");
-
-// Lazy load - Code splitting
 
 const sTag = "[App]";
 
@@ -160,24 +144,15 @@ function App() {
                             }
                         />
 
-                        {/* forgot pass */}
-                        {/* <Route
-              path="/forgot-pass"
-              element={
-                <GuestRoute>
-                  <ForgotPasswordScreen />
-                </GuestRoute>
-              }
-            /> */}
-                        {/* reset pass */}
-                        {/* <Route
-              path="/reset-pass"
-              element={
-                <GuestRoute>
-                  <ResetPasswordScreen />
-                </GuestRoute>
-              }
-            /> */}
+                        {/* Request to reset pass */}
+                        <Route
+                            path='/request-to-reset-pass'
+                            element={
+                                <GuestRoute>
+                                    <RequestToResetPass />
+                                </GuestRoute>
+                            }
+                        />
                         {/* Not Found */}
                         <Route path="*" element={<AppNotFound />} />
                     </Routes>

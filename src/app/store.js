@@ -2,6 +2,7 @@
 import authReducer from "./authSlice";
 import homeReducer from "../features/Home/homeSlice";
 import roomReducer from "../features/Room/roomSlice";
+import deviceReducer from "../features/Device/deviceSlice";
 
 const {
   configureStore
@@ -12,6 +13,7 @@ const rootReducer = {
   auth: authReducer,
   home: homeReducer,
   room: roomReducer,
+  device: deviceReducer,
 };
 
 // app store

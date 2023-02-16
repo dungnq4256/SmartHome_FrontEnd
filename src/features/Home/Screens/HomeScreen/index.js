@@ -422,6 +422,7 @@ function HomeScreen(props) {
                                         <tr>
                                             <th>STT</th>
                                             <th>Tên phòng</th>
+                                            <th>Số lượng thiết bị</th>
                                             <th>Thực hiện</th>
                                         </tr>
                                     </thead>
@@ -431,6 +432,7 @@ function HomeScreen(props) {
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
                                                     <td>{item.roomName}</td>
+                                                    <td></td>
                                                     <td>
                                                         <div>
                                                             <button

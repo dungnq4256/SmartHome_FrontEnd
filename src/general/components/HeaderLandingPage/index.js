@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./style.scss";
 import ToastHelper from "general/helpers/ToastHelper";
+import ModalCreateDevice from "features/Device/Components/ModalCreateDevice";
 
 HeaderLandingPage.propTypes = {
     loggedIn: PropTypes.bool,
@@ -28,8 +29,11 @@ function HeaderLandingPage(props) {
     const { showSideBarMobile } = props;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { isChangingPassword, currentAccount } = useSelector((state) => state?.auth);
+    const { isChangingPassword, currentAccount } = useSelector(
+        (state) => state?.auth
+    );
     let [showLogOutModal, setShowLogOutModal] = useState(false);
+    let [showModalCreateDevice, setShowModalCreateDevice] = useState(false);
     let [showSideBar, setShowSideBar] = useState(showSideBarMobile);
     const [showChangePasswordModal, setShowChangePasswordModal] =
         useState(false);
@@ -50,7 +54,7 @@ function HeaderLandingPage(props) {
             newPassword: "",
             confirmPassword: "",
         },
-        onSubmit: async (values, {resetForm}) => {
+        onSubmit: async (values, { resetForm }) => {
             const params = { ...values };
             let inputPassword = params.password;
             params.password = Utils.sha256(inputPassword);
@@ -65,7 +69,7 @@ function HeaderLandingPage(props) {
                     ToastHelper.showError(`${res.payload.message}`);
                 } else {
                     setShowChangePasswordModal(false);
-                    resetForm({values: ''});
+                    resetForm({ values: "" });
                 }
             } catch (error) {
                 console.log(` error: ${error.message}`);
@@ -98,8 +102,23 @@ function HeaderLandingPage(props) {
             <NavLink to="/home" className="d-flex d-lg-none align-items-center">
                 <LogoDark />
             </NavLink>
-
+            <div className="d-none d-md-flex fw-bold fs-4 flex-fill justify-content-start mx-5">
+                Xin chào, {currentAccount?.fullname}
+            </div>
             <div className="d-flex flex-fill justify-content-end">
+                <button
+                    className="ButtonPrimary "
+                    onClick={() => setShowModalCreateDevice(true)}
+                >
+                    <i className="far fa-plus text-white me-2"></i>
+                    Thêm thiết bị
+                </button>
+            </div>
+            <div className="d-flex">
+                <div
+                    className="mx-4 my-2"
+                    style={{ borderLeft: "2px solid #b5b5c3" }}
+                ></div>
                 <input type="checkbox" id="dropdownMenu-loggedIn" />
                 <label
                     className="m-0"
@@ -119,11 +138,12 @@ function HeaderLandingPage(props) {
                             height: "40px",
                             width: "40px",
                             objectFit: "cover",
-                            marginRight: "2rem",
+                            marginRight: "1rem",
                             borderRadius: "5px",
                         }}
                         alt="Ảnh đại diện"
                     />
+                    <i className="fas fa-sort-down me-2"></i>
                 </label>
                 <div id="overlay">
                     <ul className="d-flex flex-column justify-content-center align-items-center ps-0 m-0 text-start">
@@ -164,14 +184,18 @@ function HeaderLandingPage(props) {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink className="dropdownMenuItem" to="/dashboard">
+                            <NavLink
+                                className="dropdownMenuItem"
+                                to="/dashboard"
+                            >
                                 <i className="fas fa-house-user mr-4"></i>
                                 Quản lý nhà
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink className="dropdownMenuItem"
-                                    onClick={() => setShowChangePasswordModal(true)}
+                            <NavLink
+                                className="dropdownMenuItem"
+                                onClick={() => setShowChangePasswordModal(true)}
                             >
                                 <i className="far fa-unlock-alt mr-4"></i>
                                 Đổi mật khẩu
@@ -260,13 +284,17 @@ function HeaderLandingPage(props) {
                     {isChangingPassword && (
                         <div className="d-flex align-items-center justify-content-center m-4">
                             <div>
-                                    <span>Vui lòng đợi trong ít phút...</span>
-                                    <span className="spinner spinner-loader spinner-primary"></span>
-                                </div>
+                                <span>Vui lòng đợi trong ít phút...</span>
+                                <span className="spinner spinner-loader spinner-primary"></span>
+                            </div>
                         </div>
                     )}
                 </form>
             </DialogModal>
+            <ModalCreateDevice
+                onClose={() => setShowModalCreateDevice(false)}
+                show={showModalCreateDevice}
+            />
         </div>
     );
 }

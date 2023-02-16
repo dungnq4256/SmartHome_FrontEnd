@@ -38,6 +38,14 @@ export const thunkEditProfile = createAsyncThunk(
   }
 );
 
+export const thunkRequestToResetPassword = createAsyncThunk(
+    "account/request-reset-password",
+    async (params, thunkApi) => {
+        const res = await authApi.requestToResetPassword(params);
+        return res;
+    }
+);
+
 export const thunkSignOut = createAsyncThunk(
     "auth/sign-out",
     async (params) => {
@@ -165,6 +173,14 @@ const authSlice = createSlice({
         //     state.currentAccount = { ...state.currentAccount, ...account };
         //   }
         // },
+
+        //Request to reset password
+        [thunkRequestToResetPassword.fulfilled]: (state, action) => {
+            const { result } = action.payload;
+            if (result === "success") {
+                ToastHelper.showSuccess("Mật khẩu mới đã được gửi tới email của bạn. Vui lòng kiểm tra hòm thư (bao gồm cả hòm thư rác).")
+            }
+        },
 
         // log out
         [thunkSignOut.fulfilled]: (state, action) => {

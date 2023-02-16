@@ -37,12 +37,6 @@ const authApi = {
         return axiosClient.post(url, params);
     },
 
-    //reset password
-    resetPassword: (params) => {
-        const url = '/account/reset-password';
-        return axiosClient.post(url, params);
-    },
-
     // change password
     changePassword: (params) => {
         const url = '/account/change-password';
