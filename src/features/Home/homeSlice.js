@@ -91,6 +91,9 @@ const homeSlice = createSlice({
     name: "home",
     initialState: {
         isGettingHomeData: false,
+        isUpdatingHomeData: false,
+        isDeletingHome: false,
+        isDeletingMember: false,
         isGettingDataList: false,
         currentHome: {},
         otherHomesList: [],
@@ -105,6 +108,15 @@ const homeSlice = createSlice({
                 },
             };
         },
+        updateOtherHomesListData: (state, action) => {
+            return {
+                ...state,
+                otherHomesList: [
+                    ...state.otherHomesList,
+                    ...action.payload,
+                ],
+            };
+        },
     },
     extraReducers: {
         //Create Home
@@ -112,15 +124,25 @@ const homeSlice = createSlice({
             const { result, home } = action.payload;
             if (result === "success") {
                 state.currentHome = home;
+                localStorage.setItem(PreferenceKeys.currentHome_id, home._id);
             }
         },
 
         //Delete Home
-        [thunkDeleteHome.fulfilled]: (state, action) => {
-            const { home } = action.payload;
-            state.currentHome = home;
+        [thunkDeleteHome.pending]: (state, action) => {
+            state.isDeletingHome = true;
         },
 
+        [thunkDeleteHome.rejected]: (state, action) => {
+            state.isDeletingHome = false;
+        },
+
+        [thunkDeleteHome.fulfilled]: (state, action) => {
+            state.isDeletingHome = false;
+            localStorage.removeItem(PreferenceKeys.currentHome_id);
+            state.currentHome = {};
+        },
+        
         //Get Other Homes List
         [thunkGetOtherHomesList.pending]: (state, action) => {
             state.isGettingDataList = true;
@@ -155,8 +177,14 @@ const homeSlice = createSlice({
         },
 
         //Update Home Data
+        [thunkUpdateHomeData.pending]: (state, action) => {
+            state.isUpdatingHomeData = true;
+        },
+        [thunkUpdateHomeData.rejected]: (state, action) => {
+            state.isUpdatingHomeData = false;
+        },
         [thunkUpdateHomeData.fulfilled]: (state, action) => {
-            state.isGettingHomeData = false;
+            state.isUpdatingHomeData = false;
             const { result, newHomeData } = action.payload;
             if (result === "success") {
                 state.currentHome = { ...state.currentHome, ...newHomeData };
@@ -186,9 +214,22 @@ const homeSlice = createSlice({
                 ToastHelper.showSuccess(message);
             }
         },
+
+        //Delete Member
+        [thunkDeleteMember.pending]: (state, action) => {
+            state.isDeletingMember = true;
+        },
+
+        [thunkDeleteMember.rejected]: (state, action) => {
+            state.isDeletingMember = false;
+        },
+
+        [thunkDeleteMember.fulfilled]: (state, action) => {
+            state.isDeletingMember = false;
+        },
     },
 });
 
 const { reducer, actions } = homeSlice;
-export const { updateCurrentHomeData } = actions;
+export const { updateCurrentHomeData, updateOtherHomesListData } = actions;
 export default reducer;

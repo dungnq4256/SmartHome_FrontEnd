@@ -1,4 +1,5 @@
-import { thunkCreateDevice } from "features/Device/deviceSlice";
+import { thunkCreateDevice, thunkGetDevicesList } from "features/Device/deviceSlice";
+import { thunkGetRoomsList } from "features/Room/roomSlice";
 import { useFormik } from "formik";
 import BaseDropdown from "general/components/Form/BaseDropdown";
 import BaseTextField from "general/components/Form/BaseTextField";
@@ -36,14 +37,13 @@ function ModalCreateDevice(props) {
 
     const { isCreatingDevice } = useSelector((state) => state?.device);
     const { currentHome } = useSelector((state) => state?.home);
+    const { roomsList } = useSelector((state) => state?.room);
+   
     const roomOptions = [];
-
-        const roomList = currentHome?.roomsList;
-
-        for (let i = 0; i < roomList?.length; i++) {
+        for (let i = 0; i < roomsList?.length; i++) {
             roomOptions.push({
-                value: roomList[i]._id,
-                text: roomList[i].roomName,
+                value: roomsList[i]._id,
+                text: roomsList[i].roomName,
             });
         }
 
@@ -69,6 +69,8 @@ function ModalCreateDevice(props) {
                     handleClose();
                     setCategory("");
                     formik.handleReset();
+                    await dispatch(thunkGetDevicesList({homeId: currentHome._id}));
+                    await dispatch(thunkGetRoomsList({homeId: currentHome._id}));
                 }
             } catch (error) {
                 console.log(` error: ${error.message}`);

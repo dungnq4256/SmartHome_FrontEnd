@@ -3,13 +3,13 @@ import axiosClient from "./axiosClient";
 const homeApi = {
     // create home
     createHome: (params) => {
-        const url = '/home/create-home';
+        const url = '/home/create';
         return axiosClient.post(url, params);
     },
 
     //delete home
     deleteHome: (params) => {
-        const url = '/home/delete-home';
+        const url = '/home/delete';
         return axiosClient.delete(url, {params});
     },
 

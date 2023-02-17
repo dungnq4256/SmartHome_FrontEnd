@@ -5,7 +5,7 @@ import ToastHelper from "general/helpers/ToastHelper";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 export const thunkCreateRoom = createAsyncThunk(
-    "room/create-room",
+    "room/create",
     async (params) => {
         const res = await roomApi.createRoom(params);
         console.log(res);
@@ -14,7 +14,7 @@ export const thunkCreateRoom = createAsyncThunk(
 );
 
 export const thunkDeleteRoom = createAsyncThunk(
-    "room/delete-room",
+    "room/delete",
     async (params) => {
         const res = await roomApi.deleteRoom(params);
         console.log(res);
@@ -23,7 +23,7 @@ export const thunkDeleteRoom = createAsyncThunk(
 );
 
 export const thunkGetRoomData = createAsyncThunk(
-    "room/get-room-data",
+    "room/detail",
     async (params) => {
         const res = await roomApi.getRoomData(params);
         console.log(res);
@@ -31,8 +31,17 @@ export const thunkGetRoomData = createAsyncThunk(
     }
 );
 
+export const thunkGetRoomsList = createAsyncThunk(
+    "room/find",
+    async (params) => {
+        const res = await roomApi.getRoomsList(params);
+        console.log(res);
+        return res;
+    }
+);
+
 export const thunkUpdateRoomData = createAsyncThunk(
-    "room/update-room-data",
+    "room/update",
     async (params) => {
         const res = await roomApi.updateRoomData(params);
         console.log(res);
@@ -44,10 +53,12 @@ const roomSlice = createSlice({
     name: "room",
     initialState: {
         isGettingRoomData: false,
+        isGettingRoomsList: false,
         isCreatingRoom: false,
         isUpdatingRoom: false,
         isDeletingRoom: false,
         currentroom: {},
+        roomsList: [],
     },
     reducers: {
         updateCurrentRoomData: (state, action) => {
@@ -57,6 +68,15 @@ const roomSlice = createSlice({
                     ...state.currentRoom,
                     ...action.payload,
                 },
+            };
+        },
+        updateRoomsListData: (state, action) => {
+            return {
+                ...state,
+                roomsList: [
+                    ...state.roomsList,
+                    ...action.payload,
+                ],
             };
         },
     },
@@ -72,6 +92,23 @@ const roomSlice = createSlice({
 
         [thunkCreateRoom.fulfilled]: (state, action) => {
             state.isCreatingRoom = false;
+        },
+
+        //get rooms list of home
+        [thunkGetRoomsList.pending]: (state, action) => {
+            state.isGettingRoomsList = true;
+        },
+
+        [thunkGetRoomsList.rejected]: (state, action) => {
+            state.isGettingRoomsList = false;
+        },
+
+        [thunkGetRoomsList.fulfilled]: (state, action) => {
+            state.isGettingRoomsList = false;
+            const { result, roomsList } = action.payload;
+            if (result === "success"){
+                state.roomsList = roomsList;
+            }
         },
 
         //update room
@@ -103,5 +140,5 @@ const roomSlice = createSlice({
 });
 
 const { reducer, actions } = roomSlice;
-export const { updateCurrentRoomData } = actions;
+export const { updateCurrentRoomData, updateRoomsListData } = actions;
 export default reducer;

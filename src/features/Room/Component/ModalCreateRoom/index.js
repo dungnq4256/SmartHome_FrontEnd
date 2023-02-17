@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ToastHelper from "general/helpers/ToastHelper";
 import BaseTextField from "general/components/Form/BaseTextField";
-import { thunkCreateRoom } from "features/Room/roomSlice";
+import { thunkCreateRoom, thunkGetRoomsList } from "features/Room/roomSlice";
 import { thunkGetHomeData } from "features/Home/homeSlice";
 
 ModalCreateRoom.propTypes = {
@@ -33,7 +33,7 @@ function ModalCreateRoom(props) {
     const { isCreatingRoom } = useSelector((state) => state?.room);
     const formik = useFormik({
         initialValues: {
-            newNameRoom: "",
+            newName: "",
         },
         onSubmit: async (values) => {
             const params = { homeId: homeId, ...values };
@@ -44,14 +44,14 @@ function ModalCreateRoom(props) {
                     handleClose();
                     formik.handleReset();
                     ToastHelper.showSuccess("Thêm phòng mới thành công");
-                    await dispatch(thunkGetHomeData({ homeId: homeId }));
+                    await dispatch(thunkGetRoomsList({ homeId: homeId }));
                 }
             } catch (err) {
                 console.log(`${err.message}`);
             }
         },
         validationSchema: Yup.object({
-            newNameRoom: Yup.string()
+            newName: Yup.string()
                 .trim()
                 .required("Bạn chưa nhập tên phòng"),
         }),
@@ -92,17 +92,17 @@ function ModalCreateRoom(props) {
                                     <div>
                                         <BaseTextField
                                             require={true}
-                                            name="newNameRoom"
+                                            name="newName"
                                             placeholder="Nhập tên phòng mới..."
                                             label="Tên phòng mới"
                                             fieldHelper={formik.getFieldHelpers(
-                                                "newNameRoom"
+                                                "newName"
                                             )}
                                             fieldProps={formik.getFieldProps(
-                                                "newNameRoom"
+                                                "newName"
                                             )}
                                             fieldMeta={formik.getFieldMeta(
-                                                "newNameRoom"
+                                                "newName"
                                             )}
                                         />
                                     </div>

@@ -96,16 +96,8 @@ const authSlice = createSlice({
             const { accessToken, expirationDateToken } = account;
             if (accessToken) {
                 localStorage.setItem(PreferenceKeys.accessToken, accessToken);
-                // localStorage.setItem(
-                //   PreferenceKeys.accessTokenExpired,
-                //   expirationDateToken
-                // );
                 updateAxiosAccessToken(accessToken);
             }
-            // const { email, password } = account;
-            // if (email && password) {
-            //   WebsocketHelper.login(email, password);
-            // }
         },
         //get current account infor
         [thunkGetAccountInfor.pending]: (state, action) => {
@@ -129,15 +121,8 @@ const authSlice = createSlice({
                         PreferenceKeys.accessToken,
                         accessToken
                     );
-                    //   localStorage.setItem(
-                    //     PreferenceKeys.accessTokenExpired,
-                    //     expirationDateToken
-                    //   );
                     updateAxiosAccessToken(accessToken);
                 }
-                // if (email) {
-                //   WebsocketHelper.loginByToken(email, localStorage.getItem(PreferenceKeys.accessToken));
-                // }
             }
         },
 
@@ -156,23 +141,6 @@ const authSlice = createSlice({
                 ToastHelper.showSuccess("Đổi mật khẩu thành công")
             }
         },
-
-        //edit profile
-        // [thunkGetAccountInfor.pending]: (state, action) => {
-        //   state.isGettingInfor = true;
-        // },
-
-        // [thunkGetAccountInfor.rejected]: (state, action) => {
-        //   state.isGettingInfor = false;
-        // },
-
-        // [thunkEditProfile.fulfilled]: (state, action) => {
-        //   state.isGettingInfor = false;
-        //   const { result, account } = action.payload;
-        //   if (result === "success") {
-        //     state.currentAccount = { ...state.currentAccount, ...account };
-        //   }
-        // },
 
         //Request to reset password
         [thunkRequestToResetPassword.fulfilled]: (state, action) => {

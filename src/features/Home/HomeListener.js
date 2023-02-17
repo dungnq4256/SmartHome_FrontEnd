@@ -15,12 +15,12 @@ function HomeListener(props) {
   const currentHomeInRedux = useSelector((state) => state.home.currentHome);
   const currentHomeInLocal = localStorage.getItem(PreferenceKeys.currentHome_id);
   useEffect(() => {
-    if (
-      Utils.isObjectEmpty(currentHomeInRedux) &&
-      currentHomeInLocal
-    ) {
-      dispatch(thunkGetHomeData({homeId: currentHomeInLocal}));
-    }
+      if (
+        Utils.isObjectEmpty(currentHomeInRedux) &&
+        currentHomeInLocal
+      ) {
+        dispatch(thunkGetHomeData({homeId: currentHomeInLocal}));
+      }
   }, [currentHomeInRedux, currentHomeInLocal]);
     return (
         <div>

@@ -56,6 +56,7 @@ function Dashboard(props) {
                 const res = await dispatch(thunkCreateHome(params));
                 if (res) {
                     ToastHelper.showSuccess(`Thêm nhà thành công`);
+                    await dispatch(thunkGetAccountInfor());
                     navigate("/home");
                 }
             } catch (error) {

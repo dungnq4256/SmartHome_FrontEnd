@@ -8,18 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ToastHelper from "general/helpers/ToastHelper";
 import BaseTextField from "general/components/Form/BaseTextField";
-import { thunkUpdateRoomData } from "features/Room/roomSlice";
+import { thunkGetRoomsList, thunkUpdateRoomData } from "features/Room/roomSlice";
 import { thunkGetHomeData } from "features/Home/homeSlice";
 
 ModalEditRoom.propTypes = {
-    homeId: PropTypes.string,
     show: PropTypes.bool,
     onClose: PropTypes.func,
     roomItem: PropTypes.object,
 };
 
 ModalEditRoom.defaultProps = {
-    homeId: "",
     show: false,
     onClose: null,
     roomItem: {},
@@ -29,30 +27,31 @@ function ModalEditRoom(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // MARK: --- Params ---
-    const { show, onClose, homeId, roomItem } = props;
+    const { show, onClose, roomItem } = props;
     const [showing, setShowing] = useState(true);
 
+    const { currentHome } = useSelector((state) => state?.home);
     const { isUpdatingRoom } = useSelector((state) => state?.room);
     const formik = useFormik({
         initialValues: {
-            name: "",
+            newName: "",
         },
         onSubmit: async (values) => {
-            const params = { homeId: homeId, roomId: roomItem._id, ...values };
+            const params = { roomId: roomItem._id, ...values };
             try {
                 const res = await dispatch(thunkUpdateRoomData(params));
                 if (res.payload.result === "success") {
                     handleClose();
                     formik.handleReset();
                     ToastHelper.showSuccess("Sửa thông tin phòng thành công");
-                    await dispatch(thunkGetHomeData({ homeId: homeId }));
+                    await dispatch(thunkGetRoomsList({ homeId: currentHome._id }));
                 }
             } catch (err) {
                 console.log(`${err.message}`);
             }
         },
         validationSchema: Yup.object({
-            name: Yup.string()
+            newName: Yup.string()
                 .trim()
                 .required("Bạn chưa nhập tên phòng"),
         }),
@@ -60,7 +59,7 @@ function ModalEditRoom(props) {
 
     useEffect(() => {
         if (roomItem) {
-            formik.getFieldHelpers("name").setValue(roomItem?.roomName);
+            formik.getFieldHelpers("newName").setValue(roomItem?.roomName);
         }
     }, [roomItem]);
 
@@ -82,7 +81,7 @@ function ModalEditRoom(props) {
             >
                 {/* header */}
                 <Modal.Header className="px-5 py-5 d-flex align-items-center justify-content-center position-relative">
-                    <Modal.Title className="">Thêm phòng mới</Modal.Title>
+                    <Modal.Title className="">Chỉnh sửa thông tin phòng</Modal.Title>
                     <div
                         className="btn btn-xs btn-icon btn-light btn-hover-secondary cursor-pointer position-absolute right-0 mr-5"
                         onClick={handleClose}
@@ -99,17 +98,17 @@ function ModalEditRoom(props) {
                                     <div>
                                         <BaseTextField
                                             require={true}
-                                            name="name"
+                                            name="newName"
                                             placeholder="Nhập tên phòng mới..."
                                             label="Tên phòng"
                                             fieldHelper={formik.getFieldHelpers(
-                                                "name"
+                                                "newName"
                                             )}
                                             fieldProps={formik.getFieldProps(
-                                                "name"
+                                                "newName"
                                             )}
                                             fieldMeta={formik.getFieldMeta(
-                                                "name"
+                                                "newName"
                                             )}
                                         />
                                     </div>
