@@ -29,9 +29,7 @@ function SideBar(props) {
     const dispatch = useDispatch();
     const loggedIn = UserHelper.checkAccessTokenValid();
     const { currentAccount } = useSelector((state) => state?.auth);
-    const { currentHome } = useSelector(
-        (state) => state?.home
-    );
+    const { currentHome } = useSelector((state) => state?.home);
     let [showSideBar, setShowSideBar] = useState(true);
     let [showLogOutModal, setShowLogOutModal] = useState(false);
 
@@ -73,14 +71,22 @@ function SideBar(props) {
             </div>
             <div className="d-flex flex-column flex-fill align-items-center w-100">
                 <div className="MenuSideBar w-100 mt-5">
-                    <div onClick={() => currentHome.name ? handleNavigate("/home") : handleNavigate("/")}>
+                    <div
+                        onClick={() =>
+                            currentHome.name
+                                ? handleNavigate("/home")
+                                : handleNavigate("/")
+                        }
+                    >
                         <div
                             className="MenuItemHome d-flex align-items-center"
                             title="Nhà"
                         >
                             <i
                                 className="fas fa-house-user"
-                               style={{color: selected === "home" && "#3E97FF"}}
+                                style={{
+                                    color: selected === "home" && "#3E97FF",
+                                }}
                             ></i>
                             <div
                                 className={`MenuItemNameHome text-white flex-fill ${
@@ -98,7 +104,13 @@ function SideBar(props) {
                             </div>
                         </div>
                     </div>
-                    <div onClick={() => currentHome.name ? handleNavigate("/rooms-list") : handleNavigate("/")}>
+                    <div
+                        onClick={() =>
+                            currentHome.name
+                                ? handleNavigate("/rooms-list")
+                                : handleNavigate("/")
+                        }
+                    >
                         <div
                             className={`MenuItem d-flex align-items-center ${
                                 selected === "rooms-list" && "MenuItem_active"
@@ -115,7 +127,13 @@ function SideBar(props) {
                             </div>
                         </div>
                     </div>
-                    <div onClick={() => currentHome.name ? handleNavigate("/devices-list") : handleNavigate("/")}>
+                    <div
+                        onClick={() =>
+                            currentHome.name
+                                ? handleNavigate("/devices-list")
+                                : handleNavigate("/")
+                        }
+                    >
                         <div
                             className={`MenuItem d-flex align-items-center ${
                                 selected === "devices-list" && "MenuItem_active"
@@ -193,10 +211,11 @@ function SideBar(props) {
                 icon="fad fa-user text-info"
                 title="Đăng xuất"
                 description="Bạn có chắc chắn muốn đăng xuất?"
-                onExecute={() => {
-                    dispatch(thunkSignOut()).then(() => {
+                onExecute={async () => {
+                    await dispatch(thunkSignOut()).then(() => {
                         UserHelper.signOut();
                     });
+                    navigate("/sign-in");
                 }}
             />
         </div>
