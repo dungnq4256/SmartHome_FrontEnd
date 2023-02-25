@@ -1,7 +1,8 @@
 // import ModalEditRoom from "features/Room/Component/ModalEditRoom";
+import ModalEditDevice from "features/Device/Components/ModalEditDevice";
 import {
     thunkDeleteDevice,
-    thunkGetDevicesList,
+    thunkGetDevicesListOfHome,
 } from "features/Device/deviceSlice";
 import DialogModal from "general/components/DialogModal";
 import ToastHelper from "general/helpers/ToastHelper";
@@ -14,9 +15,10 @@ function DevicesOfHome(props) {
     const dispatch = useDispatch();
 
     const { currentHome } = useSelector((state) => state?.home);
-    const { isDeletingDevice, devicesList } = useSelector(
+    const { isDeletingDevice, devicesListOfHome } = useSelector(
         (state) => state?.device
     );
+    const { roomsList } = useSelector((state) => state?.room);
 
     const [selectedDevice, setSelectedDevice] = useState({});
     const [showModalDeleteDevice, setShowModalDeleteDevice] = useState(false);
@@ -32,7 +34,7 @@ function DevicesOfHome(props) {
             ToastHelper.showSuccess(
                 `Xóa [${selectedDevice?.deviceName}] thành công`
             );
-            await dispatch(thunkGetDevicesList({ homeId: currentHome._id }));
+            await dispatch(thunkGetDevicesListOfHome({ homeId: currentHome._id }));
         }
     };
 
@@ -44,9 +46,9 @@ function DevicesOfHome(props) {
                         <div className="font-weight-bolder font-size-h3 text-remaining">
                             Danh sách thiết bị
                         </div>
-                        {devicesList?.length > 0 ? (
+                        {devicesListOfHome?.length > 0 ? (
                             <div className="font-weight-bolder text-black-50 font-size-lg text-remaining">
-                                Tổng cộng: {devicesList?.length} thiết bị
+                                Tổng cộng: {devicesListOfHome?.length} thiết bị
                             </div>
                         ) : (
                             <div className="font-weight-bolder text-black-50 font-size-lg text-remaining">
@@ -56,22 +58,32 @@ function DevicesOfHome(props) {
                     </div>
                 </div>
                 <div className="card-body p-0">
-                    {devicesList?.length > 0 && (
+                    {devicesListOfHome?.length > 0 && (
                         <BootstrapTable striped bordered hover>
                             <thead>
                                 <tr>
                                     <th>STT</th>
                                     <th>Tên thiết bị</th>
                                     <th>Loại</th>
+                                    <th>Phòng</th>
                                     <th>Thực hiện</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {devicesList?.map((item, index) => (
+                                {devicesListOfHome?.map((item, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{item.deviceName}</td>
                                         <td>{item.deviceType}</td>
+                                        <td>
+                                            {
+                                                roomsList.filter(
+                                                    (room) =>
+                                                        room._id ===
+                                                        item.roomId
+                                                )[0].roomName
+                                            }
+                                        </td>
                                         <td>
                                             <div>
                                                 <button
@@ -109,11 +121,11 @@ function DevicesOfHome(props) {
                     )}
                 </div>
             </div>
-            {/* <ModalEditDevice
+            <ModalEditDevice
                 onClose={() => setShowModalEditDevice(false)}
                 show={showModalEditDevice}
                 deviceItem={selectedDevice}
-            /> */}
+            />
             <DialogModal
                 title="Xóa thiết bị"
                 description={`Bạn có chắc muốn xóa [${selectedDevice?.deviceName}]`}

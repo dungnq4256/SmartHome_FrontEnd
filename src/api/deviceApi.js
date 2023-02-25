@@ -19,9 +19,15 @@ const deviceApi = {
         return axiosClient.get(url, {params});
     },
 
-    //get device list
-    getDevicesList: (params) => {
-        const url = '/device/find';
+    //get device list of home
+    getDevicesListOfHome: (params) => {
+        const url = '/device/find-by-home';
+        return axiosClient.get(url, {params});
+    },
+
+    //get device list of room
+    getDevicesListOfRoom: (params) => {
+        const url = '/device/find-by-room';
         return axiosClient.get(url, {params});
     },
 

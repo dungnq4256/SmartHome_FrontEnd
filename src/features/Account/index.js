@@ -211,14 +211,24 @@ function Account(props) {
                                     <div className="col-lg-8 pb-1">
                                         <BaseDropdown
                                             options={AppData.genderOptions}
-                                            dropdownInitialValue={UserHelper.renderGender(currentAccount?.gender)}
-                                            name='gender'
-                                            fieldHelper={formik.getFieldHelpers("gender")}
-                                            fieldMeta={formik.getFieldMeta("gender")}
-                                            fieldProps={formik.getFieldProps("gender")}
+                                            dropdownInitialValue={UserHelper.renderGender(
+                                                currentAccount?.gender
+                                            )}
+                                            name="gender"
+                                            fieldHelper={formik.getFieldHelpers(
+                                                "gender"
+                                            )}
+                                            fieldMeta={formik.getFieldMeta(
+                                                "gender"
+                                            )}
+                                            fieldProps={formik.getFieldProps(
+                                                "gender"
+                                            )}
                                             onValueChanged={(value) => {
-                                                formik.getFieldHelpers("gender").setValue(value);
-                                                }}
+                                                formik
+                                                    .getFieldHelpers("gender")
+                                                    .setValue(value);
+                                            }}
                                         />
                                     </div>
                                 )}
@@ -333,7 +343,6 @@ function Account(props) {
                                         <tr>
                                             <th>Nhà</th>
                                             <th>Địa chỉ</th>
-                                            <th>Ngày tạo</th>
                                             <th>Thực hiện</th>
                                         </tr>
                                     </thead>
@@ -342,12 +351,6 @@ function Account(props) {
                                             <tr key={item._id}>
                                                 <td>{item.homeName}</td>
                                                 <td>{item.homeAddress}</td>
-                                                <td>
-                                                    {Utils.formatDateTime(
-                                                        item?.createdAt,
-                                                        "DD-MM-YYYY"
-                                                    )}
-                                                </td>
                                                 <td>
                                                     <button
                                                         className="ButtonPrimary"
@@ -396,7 +399,6 @@ function Account(props) {
                                         <tr>
                                             <th>Nhà</th>
                                             <th>Địa chỉ</th>
-                                            <th>Ngày tạo</th>
                                             <th>Thực hiện</th>
                                         </tr>
                                     </thead>
@@ -405,12 +407,6 @@ function Account(props) {
                                             <tr key={item._id}>
                                                 <td>{item.homeName}</td>
                                                 <td>{item.homeAddress}</td>
-                                                <td>
-                                                    {Utils.formatDateTime(
-                                                        item?.createdAt,
-                                                        "DD-MM-YYYY"
-                                                    )}
-                                                </td>
                                                 <td>
                                                     <button
                                                         className="ButtonDanger"

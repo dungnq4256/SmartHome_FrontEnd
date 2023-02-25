@@ -20,6 +20,7 @@ import ToastHelper from "general/helpers/ToastHelper";
 import { thunkGetAccountInfor, thunkSignOut } from "app/authSlice";
 import Utils from "general/utils/Utils";
 import UserHelper from "general/helpers/UserHelper";
+import BaseSearchBar from "general/components/Form/BaseSearchBar";
 
 Dashboard.propTypes = {};
 
@@ -27,6 +28,9 @@ function Dashboard(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [selected, setSelected] = useState("owner");
+    const [filters, setFilters] = useState({
+        q: "",
+    });
     const { currentAccount, isGettingInfor } = useSelector(
         (state) => state?.auth
     );
@@ -76,6 +80,10 @@ function Dashboard(props) {
         });
         navigate("/sign-in");
     };
+
+    useEffect(() => {
+        dispatch(thunkGetOtherHomesList(filters));
+    }, [filters]);
 
     // const handleNavigateHome = async (params) => {
     //     await dispatch(thunkGetHomeData(params));
@@ -174,7 +182,7 @@ function Dashboard(props) {
                                     onClick={async () => {
                                         setSelected("other-homes");
                                         await dispatch(
-                                            thunkGetOtherHomesList()
+                                            thunkGetOtherHomesList(filters)
                                         );
                                     }}
                                 >
@@ -232,7 +240,9 @@ function Dashboard(props) {
                                                                             }
                                                                         )
                                                                     );
-                                                                    navigate("/home")
+                                                                    navigate(
+                                                                        "/home"
+                                                                    );
                                                                 }}
                                                             >
                                                                 Chi tiết nhà
@@ -306,45 +316,72 @@ function Dashboard(props) {
                             {selected === "other-homes" && (
                                 <div>
                                     {otherHomesList?.length > 0 ? (
-                                        <BootstrapTable striped bordered hover>
-                                            <thead>
-                                                <tr>
-                                                    <th>Nhà</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Thực hiện</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {otherHomesList.map((item) => (
-                                                    <tr key={item._id}>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.address}</td>
-                                                        <td>
-                                                            <button
-                                                                className="ButtonPrimary"
-                                                                onClick={async () => {
-                                                                    await dispatch(
-                                                                        thunkRequestToJoinHome(
-                                                                            {
-                                                                                homeId: item._id,
-                                                                            }
-                                                                        )
-                                                                    );
-                                                                    await dispatch(
-                                                                        thunkGetOtherHomesList()
-                                                                    );
-                                                                    await dispatch(
-                                                                        thunkGetAccountInfor()
-                                                                    );
-                                                                }}
-                                                            >
-                                                                Gửi yêu cầu
-                                                            </button>
-                                                        </td>
+                                        <div>
+                                            <BaseSearchBar
+                                                placeholder="Tìm kiếm nhà"
+                                                className="mb-5"
+                                                value={filters.q}
+                                                name="homeFilter"
+                                                onSubmit={(value) => {
+                                                    setFilters({
+                                                        ...filters,
+                                                        q: value,
+                                                    });
+                                                }}
+                                            />
+                                            <BootstrapTable
+                                                striped
+                                                bordered
+                                                hover
+                                            >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nhà</th>
+                                                        <th>Địa chỉ</th>
+                                                        <th>Thực hiện</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </BootstrapTable>
+                                                </thead>
+                                                <tbody>
+                                                    {otherHomesList.map(
+                                                        (item) => (
+                                                            <tr key={item._id}>
+                                                                <td>
+                                                                    {item.name}
+                                                                </td>
+                                                                <td>
+                                                                    {
+                                                                        item.address
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    <button
+                                                                        className="ButtonPrimary"
+                                                                        onClick={async () => {
+                                                                            await dispatch(
+                                                                                thunkRequestToJoinHome(
+                                                                                    {
+                                                                                        homeId: item._id,
+                                                                                    }
+                                                                                )
+                                                                            );
+                                                                            await dispatch(
+                                                                                thunkGetOtherHomesList()
+                                                                            );
+                                                                            await dispatch(
+                                                                                thunkGetAccountInfor()
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        Gửi yêu
+                                                                        cầu
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    )}
+                                                </tbody>
+                                            </BootstrapTable>
+                                        </div>
                                     ) : (
                                         !isGettingDataList && (
                                             <div>Danh sách trống</div>

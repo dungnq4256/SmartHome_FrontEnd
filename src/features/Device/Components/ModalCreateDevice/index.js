@@ -1,5 +1,8 @@
-import { thunkCreateDevice, thunkGetDevicesList } from "features/Device/deviceSlice";
-import { thunkGetRoomsList } from "features/Room/roomSlice";
+import {
+    thunkCreateDevice,
+    thunkGetDevicesListOfHome,
+} from "features/Device/deviceSlice";
+import { thunkGetRoomData, thunkGetRoomsList } from "features/Room/roomSlice";
 import { useFormik } from "formik";
 import BaseDropdown from "general/components/Form/BaseDropdown";
 import BaseTextField from "general/components/Form/BaseTextField";
@@ -37,16 +40,15 @@ function ModalCreateDevice(props) {
 
     const { isCreatingDevice } = useSelector((state) => state?.device);
     const { currentHome } = useSelector((state) => state?.home);
-    const { roomsList } = useSelector((state) => state?.room);
-   
-    const roomOptions = [];
-        for (let i = 0; i < roomsList?.length; i++) {
-            roomOptions.push({
-                value: roomsList[i]._id,
-                text: roomsList[i].roomName,
-            });
-        }
+    const { roomsList, currentRoom } = useSelector((state) => state?.room);
 
+    const roomOptions = [];
+    for (let i = 0; i < roomsList?.length; i++) {
+        roomOptions.push({
+            value: roomsList[i]._id,
+            text: roomsList[i].roomName,
+        });
+    }
 
     const onSelected = (value) => {
         setDevice(value);
@@ -69,8 +71,17 @@ function ModalCreateDevice(props) {
                     handleClose();
                     setCategory("");
                     formik.handleReset();
-                    await dispatch(thunkGetDevicesList({homeId: currentHome._id}));
-                    await dispatch(thunkGetRoomsList({homeId: currentHome._id}));
+                    await dispatch(
+                        thunkGetDevicesListOfHome({ homeId: currentHome._id })
+                    );
+                    await dispatch(
+                        thunkGetRoomsList({ homeId: currentHome._id })
+                    );
+                    if (currentRoom) {
+                        await dispatch(
+                            thunkGetRoomData({ roomId: currentRoom._id })
+                        );
+                    }
                 }
             } catch (error) {
                 console.log(` error: ${error.message}`);
@@ -80,9 +91,7 @@ function ModalCreateDevice(props) {
             deviceName: Yup.string()
                 .trim()
                 .required("Bạn chưa nhập tên thiết bị mới"),
-                roomId: Yup.string()
-                .trim()
-                .required("Bạn chưa chọn phòng"),
+            roomId: Yup.string().trim().required("Bạn chưa chọn phòng"),
         }),
     });
 

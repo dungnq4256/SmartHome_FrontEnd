@@ -31,10 +31,19 @@ export const thunkGetDeviceData = createAsyncThunk(
     }
 );
 
-export const thunkGetDevicesList = createAsyncThunk(
-    "device/find",
+export const thunkGetDevicesListOfHome = createAsyncThunk(
+    "device/find-by-home",
     async (params) => {
-        const res = await deviceApi.getDevicesList(params);
+        const res = await deviceApi.getDevicesListOfHome(params);
+        console.log(res);
+        return res;
+    }
+);
+
+export const thunkGetDevicesListOfRoom = createAsyncThunk(
+    "device/find-by-room",
+    async (params) => {
+        const res = await deviceApi.getDevicesListOfRoom(params);
         console.log(res);
         return res;
     }
@@ -58,7 +67,8 @@ const deviceSlice = createSlice({
         isUpdatingDevice: false,
         isDeletingDevice: false,
         currentDevice: {},
-        devicesList: [],
+        devicesListOfHome: [],
+        devicesListOfRoom: [],
     },
     reducers: {
         updateCurrentDeviceData: (state, action) => {
@@ -111,20 +121,37 @@ const deviceSlice = createSlice({
             }
         },
 
-        //get devices list
-        [thunkGetDevicesList.pending]: (state, action) => {
+        //get devices list of home
+        [thunkGetDevicesListOfHome.pending]: (state, action) => {
             state.isGettingDevicesList = true;
         },
 
-        [thunkGetDevicesList.rejected]: (state, action) => {
+        [thunkGetDevicesListOfHome.rejected]: (state, action) => {
             state.isGettingDevicesList = false;
         },
 
-        [thunkGetDevicesList.fulfilled]: (state, action) => {
+        [thunkGetDevicesListOfHome.fulfilled]: (state, action) => {
             state.isGettingDevicesList = false;
-            const { result, devicesList } = action.payload;
+            const { result, devicesListOfHome } = action.payload;
             if (result === "success") {
-                state.devicesList = devicesList;
+                state.devicesListOfHome = devicesListOfHome;
+            }
+        },
+
+        //get devices list of room
+        [thunkGetDevicesListOfRoom.pending]: (state, action) => {
+            state.isGettingDevicesList = true;
+        },
+
+        [thunkGetDevicesListOfRoom.rejected]: (state, action) => {
+            state.isGettingDevicesList = false;
+        },
+
+        [thunkGetDevicesListOfRoom.fulfilled]: (state, action) => {
+            state.isGettingDevicesList = false;
+            const { result, devicesListOfRoom } = action.payload;
+            if (result === "success") {
+                state.devicesListOfRoom = devicesListOfRoom;
             }
         },
 

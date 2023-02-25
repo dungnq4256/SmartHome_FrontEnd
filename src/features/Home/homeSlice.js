@@ -43,8 +43,8 @@ export const thunkUpdateHomeData = createAsyncThunk(
 
 export const thunkGetOtherHomesList = createAsyncThunk(
     "home/get-other-homes-list",
-    async () => {
-        const res = await homeApi.getOtherHomesList();
+    async (params) => {
+        const res = await homeApi.getOtherHomesList(params);
         return res;
     }
 );

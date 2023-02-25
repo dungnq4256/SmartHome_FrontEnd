@@ -3,9 +3,13 @@ import BaseLayout from "general/components/BaseLayout";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import DeviceItem from "../Component/DeviceItem";
+import AirConditioner from "../Component/AirConditioner";
+import Camera from "../Component/Camera";
+import Lamp from "../Component/Lamp";
 import ModalCreateRoom from "../Component/ModalCreateRoom";
-import { thunkGetRoomsList } from "../roomSlice";
+import Security from "../Component/Security";
+import Sensor from "../Component/Sensor";
+import { thunkGetRoomData, thunkGetRoomsList } from "../roomSlice";
 import "./style.scss";
 
 RoomsListScreen.propTypes = {};
@@ -14,15 +18,15 @@ function RoomsListScreen(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { currentHome } = useSelector((state) => state?.home);
-    const { roomsList } = useSelector((state) => state?.room);
-    const { devicesList } = useSelector((state) => state?.device);
+    const { roomsList, currentRoom, isGettingRoomData } = useSelector(
+        (state) => state?.room
+    );
     const [showModalCreateRoom, setShowModalCreateRoom] = useState(false);
     const [selected, setSelected] = useState(roomsList[0]?._id ?? "");
 
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(thunkGetRoomsList({ homeId: currentHome._id }));
-            await dispatch(thunkGetDevicesList({ homeId: currentHome._id }));
         };
         fetchData();
         return () => {};
@@ -44,7 +48,14 @@ function RoomsListScreen(props) {
                                         selected === room?._id &&
                                         "ButtonNavigateRoom_active"
                                     }`}
-                                    onClick={() => setSelected(room?._id)}
+                                    onClick={() => {
+                                        setSelected(room?._id);
+                                        dispatch(
+                                            thunkGetRoomData({
+                                                roomId: room?._id,
+                                            })
+                                        );
+                                    }}
                                 >
                                     {room?.roomName}
                                 </div>
@@ -59,25 +70,97 @@ function RoomsListScreen(props) {
                             </button>
                         </div>
                     </div>
-                    <div className="rounded-lg">
-                        <div className="row">
-                            {roomsList?.map(
-                                (room, index) =>
-                                    selected === room?._id &&
-                                    devicesList
-                                        ?.filter(
-                                            (item) => item.roomId === room._id
-                                        )
-                                        ?.map((device) => (
-                                            <DeviceItem
-                                                key={device._id}
-                                                deviceName={device.deviceName}
-                                                deviceType={device.deviceType}
-                                            />
-                                        ))
-                            )}
+                    {isGettingRoomData ? (
+                        <div className="d-flex mt-15 justify-content-center align-items-center">
+                            <div
+                                className="spinner-border text-primary"
+                                style={{ width: "3rem", height: "3rem" }}
+                                role="status"
+                            >
+                                <span className="sr-only">Loading...</span>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="rounded-lg">
+                            <div className="row">
+                                <AirConditioner />
+                            {currentRoom?.devicesList?.filter(
+                                    (device) =>
+                                        device.deviceType === "Cảm biến nhiệt độ và độ ẩm" ||
+                                        device.deviceType === "Cảm biến khói" ||
+                                        device.deviceType === "Cảm biến độ sáng" ||
+                                        device.deviceType === "Cảm biến động tĩnh"
+                                ).length > 0 && (
+                                    <Sensor
+                                        sensorsList={currentRoom?.devicesList?.filter(
+                                            (device) =>
+                                                device.deviceType ===
+                                                    "Cảm biến nhiệt độ và độ ẩm" ||
+                                                device.deviceType ===
+                                                    "Cảm biến khói" ||
+                                                device.deviceType ===
+                                                    "Cảm biến độ sáng" ||
+                                                device.deviceType === "Cảm biến động tĩnh"
+                                        )}
+                                    />
+                                )}
+                                {currentRoom?.devicesList?.filter(
+                                    (device) =>
+                                        device.deviceType === "Bóng đèn" ||
+                                        device.deviceType === "Dải đèn" ||
+                                        device.deviceType === "Đèn bàn" ||
+                                        device.deviceType === "Đèn ngủ"
+                                ).length > 0 && (
+                                    <Lamp
+                                        lampsList={currentRoom?.devicesList?.filter(
+                                            (device) =>
+                                                device.deviceType ===
+                                                    "Bóng đèn" ||
+                                                device.deviceType ===
+                                                    "Dải đèn" ||
+                                                device.deviceType ===
+                                                    "Đèn bàn" ||
+                                                device.deviceType === "Đèn ngủ"
+                                        )}
+                                    />
+                                )}
+                                {currentRoom?.devicesList?.filter(
+                                    (device) => device.deviceType === "Camera"
+                                ).length > 0 &&
+                                    currentRoom?.devicesList
+                                        ?.filter(
+                                            (device) =>
+                                                device.deviceType === "Camera"
+                                        )
+                                        .map((item) => (
+                                            <Camera
+                                                key={item._id}
+                                                deviceName={item.deviceName}
+                                                deviceType={item.deviceType}
+                                            />
+                                        ))}
+                                {currentRoom?.devicesList?.filter(
+                                    (device) =>
+                                        device.deviceType ===
+                                            "Chuông chống trộm" ||
+                                        device.deviceType === "Khóa cửa" ||
+                                        device.deviceType === "Két sắt an toàn"
+                                ).length > 0 && (
+                                    <Security
+                                        devicesList={currentRoom?.devicesList?.filter(
+                                            (device) =>
+                                                device.deviceType ===
+                                                    "Chuông chống trộm" ||
+                                                device.deviceType ===
+                                                    "Khóa cửa" ||
+                                                device.deviceType ===
+                                                    "Két sắt an toàn"
+                                        )}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
             <ModalCreateRoom

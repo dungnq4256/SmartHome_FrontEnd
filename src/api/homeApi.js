@@ -26,9 +26,9 @@ const homeApi = {
     },
 
     //get other homes list 
-    getOtherHomesList: () => {
+    getOtherHomesList: (params) => {
         const url = '/home/find';
-        return axiosClient.get(url);
+        return axiosClient.get(url, {params});
     },
 
     //request to join home

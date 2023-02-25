@@ -1,4 +1,4 @@
-import { thunkGetDevicesList } from "features/Device/deviceSlice";
+import { thunkGetDevicesListOfHome } from "features/Device/deviceSlice";
 import { thunkGetRoomsList } from "features/Room/roomSlice";
 import BaseLayout from "general/components/BaseLayout";
 import { useEffect } from "react";
@@ -20,7 +20,7 @@ function HomeScreen(props) {
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(thunkGetRoomsList({ homeId: currentHome._id }));
-            await dispatch(thunkGetDevicesList({ homeId: currentHome._id }));
+            await dispatch(thunkGetDevicesListOfHome({ homeId: currentHome._id }));
         };
         fetchData();
         return () => {};

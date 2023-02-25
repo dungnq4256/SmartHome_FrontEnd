@@ -57,7 +57,7 @@ const roomSlice = createSlice({
         isCreatingRoom: false,
         isUpdatingRoom: false,
         isDeletingRoom: false,
-        currentroom: {},
+        currentRoom: {},
         roomsList: [],
     },
     reducers: {
@@ -92,6 +92,21 @@ const roomSlice = createSlice({
 
         [thunkCreateRoom.fulfilled]: (state, action) => {
             state.isCreatingRoom = false;
+        },
+
+        //Get room data
+        [thunkGetRoomData.pending]: (state, action) => {
+            state.isGettingRoomData = true;
+        },
+
+        [thunkGetRoomData.rejected]: (state, action) => {
+            state.isGettingRoomData = false;
+        },
+
+        [thunkGetRoomData.fulfilled]: (state, action) => {
+            state.isGettingRoomData = false;
+            const { roomData } = action.payload;
+            state.currentRoom = roomData;
         },
 
         //get rooms list of home
