@@ -81,7 +81,7 @@ function DevicesOfHome(props) {
                                                     (room) =>
                                                         room._id ===
                                                         item.roomId
-                                                )[0].roomName
+                                                )[0]?.roomName
                                             }
                                         </td>
                                         <td>

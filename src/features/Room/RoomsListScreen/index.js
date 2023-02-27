@@ -1,10 +1,10 @@
-import { thunkGetDevicesList } from "features/Device/deviceSlice";
 import BaseLayout from "general/components/BaseLayout";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AirConditioner from "../Component/AirConditioner";
 import Camera from "../Component/Camera";
+import ElectricalDevice from "../Component/ElectricalDevice";
 import Lamp from "../Component/Lamp";
 import ModalCreateRoom from "../Component/ModalCreateRoom";
 import Security from "../Component/Security";
@@ -83,13 +83,15 @@ function RoomsListScreen(props) {
                     ) : (
                         <div className="rounded-lg">
                             <div className="row">
-                                <AirConditioner />
-                            {currentRoom?.devicesList?.filter(
+                                {currentRoom?.devicesList?.filter(
                                     (device) =>
-                                        device.deviceType === "Cảm biến nhiệt độ và độ ẩm" ||
+                                        device.deviceType ===
+                                            "Cảm biến nhiệt độ và độ ẩm" ||
                                         device.deviceType === "Cảm biến khói" ||
-                                        device.deviceType === "Cảm biến độ sáng" ||
-                                        device.deviceType === "Cảm biến động tĩnh"
+                                        device.deviceType ===
+                                            "Cảm biến độ sáng" ||
+                                        device.deviceType ===
+                                            "Cảm biến động tĩnh"
                                 ).length > 0 && (
                                     <Sensor
                                         sensorsList={currentRoom?.devicesList?.filter(
@@ -100,7 +102,8 @@ function RoomsListScreen(props) {
                                                     "Cảm biến khói" ||
                                                 device.deviceType ===
                                                     "Cảm biến độ sáng" ||
-                                                device.deviceType === "Cảm biến động tĩnh"
+                                                device.deviceType ===
+                                                    "Cảm biến động tĩnh"
                                         )}
                                     />
                                 )}
@@ -135,10 +138,24 @@ function RoomsListScreen(props) {
                                         .map((item) => (
                                             <Camera
                                                 key={item._id}
-                                                deviceName={item.deviceName}
-                                                deviceType={item.deviceType}
+                                                deviceItem={item}
                                             />
                                         ))}
+                                {currentRoom?.devicesList?.filter(
+                                    (device) => device.deviceType === "Máy lạnh"
+                                ).length > 0 &&
+                                    currentRoom?.devicesList
+                                        ?.filter(
+                                            (device) =>
+                                                device.deviceType === "Máy lạnh"
+                                        )
+                                        .map((item) => (
+                                            <AirConditioner
+                                                key={item._id}
+                                                deviceItem={item}
+                                            />
+                                        ))}
+
                                 {currentRoom?.devicesList?.filter(
                                     (device) =>
                                         device.deviceType ===
@@ -155,6 +172,24 @@ function RoomsListScreen(props) {
                                                     "Khóa cửa" ||
                                                 device.deviceType ===
                                                     "Két sắt an toàn"
+                                        )}
+                                    />
+                                )}
+                                {currentRoom?.devicesList?.filter(
+                                    (device) =>
+                                        device.deviceType === "Quạt" ||
+                                        device.deviceType ===
+                                            "Máy lọc không khí" ||
+                                        device.deviceType === "Máy hút ẩm"
+                                ).length > 0 && (
+                                    <ElectricalDevice
+                                        devicesList={currentRoom?.devicesList?.filter(
+                                            (device) =>
+                                                device.deviceType === "Quạt" ||
+                                                device.deviceType ===
+                                                    "Máy lọc không khí" ||
+                                                device.deviceType ===
+                                                    "Máy hút ẩm"
                                         )}
                                     />
                                 )}

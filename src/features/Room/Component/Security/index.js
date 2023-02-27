@@ -3,18 +3,23 @@ import PropTypes from "prop-types";
 import "./style.scss";
 import ToggleSwitchButton from "general/components/ToggleSwitchButton";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 Security.propTypes = {
+    hideRoomName: PropTypes.bool,
     devicesList: PropTypes.array,
 };
 
 Security.defaultProps = {
+    hideRoomName: true,
     devicesList: [],
 };
 
 function Security(props) {
-    const { devicesList } = props;
+    const { devicesList, hideRoomName } = props;
     const [valueSecurity, setValueSecurity] = useState(true);
+    const {roomsList} = useSelector(state => state?.room);
+    const renderRoomName = (id) => roomsList?.filter(room => room._id === id)[0]?.roomName;
     console.log(valueSecurity);
     return (
         <div className="col-12 col-md-6">
@@ -29,7 +34,7 @@ function Security(props) {
                                 className="d-flex my-5 p-2 border-1 rounded-xl"
                                 style={{
                                     backgroundColor: valueSecurity
-                                        ? "#2459FF"
+                                        ? "#3D99FF"
                                         : "#F0F4F9",
                                 }}
                             >
@@ -42,8 +47,13 @@ function Security(props) {
                                     >
                                         {item.deviceName}
                                     </div>
-                                    <div className="Security_Type">
-                                        {item.deviceType}
+                                    <div
+                                        className="Security_Type"
+                                        style={{
+                                            color: valueSecurity && "#dfdfdf",
+                                        }}
+                                    >
+                                        {hideRoomName ? item.deviceType : renderRoomName(item.roomId)}
                                     </div>
                                 </div>
                                 <div className="d-flex flex-fill justify-content-end">

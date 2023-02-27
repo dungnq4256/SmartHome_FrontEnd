@@ -106,6 +106,7 @@ function ModalCreateDevice(props) {
     function handleClose() {
         if (onClose) {
             onClose();
+            setCategory("");
         }
     }
     return (

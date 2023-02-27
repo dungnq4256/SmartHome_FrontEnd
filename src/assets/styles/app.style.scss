@@ -45,6 +45,18 @@
     &:hover {
         background-color: #6fb2ff;
     }
+    &-disabled {
+        background-color: #eaeaea ;
+        color: #303030;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 5px;
+        &:hover {
+            cursor: default;
+        }
+    }
 }
 
 .ButtonDanger{

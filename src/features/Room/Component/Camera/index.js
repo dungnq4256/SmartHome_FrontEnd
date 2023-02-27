@@ -2,19 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import "./style.scss";
+import { useSelector } from "react-redux";
 
 Camera.propTypes = {
-    deviceName: PropTypes.string,
-    deviceType: PropTypes.string,
+    deviceItem: PropTypes.object,
+    hideRoomName: PropTypes.bool,
 };
 
 Camera.defaultProps = {
-    deviceName: "",
-    deviceType: "",
+    deviceItem: null,
+    hideRoomName: true,
 };
 
 function Camera(props) {
-    const { deviceName, deviceType } = props;
+    const { deviceItem, hideRoomName } = props;
+    const { roomsList } = useSelector((state) => state?.room);
+    const renderRoomName = (id) =>
+        roomsList?.filter((room) => room._id === id)[0]?.roomName;
     let startWebCam = function () {
         let video = document.getElementById("video"),
             vendorURL = window.URL || window.webkitURL;
@@ -39,7 +43,19 @@ function Camera(props) {
         <div className="Camera col-12 col-md-6">
             <div className="d-flex flex-column my-5 p-2 border-1 bg-white shadow-sm rounded-xl">
                 <div className="d-flex m-3 align-items-end">
-                    <div className="Camera_Name me-1">{deviceName}</div>
+                    <div className="Camera_Name me-1">
+                        {deviceItem?.deviceName}
+                        {!hideRoomName && <span
+                            style={{
+                                fontSize: "0.85rem",
+                                fontWeight: "500",
+                                color: "#bdbdbd",
+                            }}
+                        >
+                            {" - "}
+                            {renderRoomName(deviceItem.roomId)}
+                        </span>}
+                    </div>
                 </div>
                 <div>
                     <video

@@ -1,4 +1,4 @@
-.AirConditioner {
+.ElectricalDevice {
     transition: all ease 0.4s;
     &_Name {
         font-size: 1.1rem;
@@ -8,9 +8,5 @@
         font-size: 0.85rem;
         font-weight: 500;
         color: #bdbdbd;
-    }
-    svg{
-        width: 150px !important;
-        height: 150px !important;
     }
 }

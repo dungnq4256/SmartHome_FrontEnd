@@ -16,7 +16,7 @@ function ToggleSwitchButton(props) {
     const { value, onChange } = props;
     return (
         <div className="d-flex">
-            <label class="switchh my-auto">
+            <label className="switchh my-auto">
                 <input
                     type="checkbox"
                     checked={value ?? false}

@@ -45,7 +45,7 @@
   }
   
   input:checked + .sliderr {
-    background-color: #0032CC;
+    background-color: #7fbcff;
   }
   
   input:hover + .sliderr {
@@ -57,5 +57,5 @@
     -ms-transform: translateY(-30px);
     transform: translateY(-30px);
     content: "On";
-    color: #0032CC;
+    color: #7fbcff;
   }
