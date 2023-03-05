@@ -36,25 +36,27 @@ function AirConditioner(props) {
 
     useEffect(() => {
         const handleControlAC = async () => {
-            controlAC
-                ? await dispatch(
-                      thunkControlDevice({
-                          deviceId: deviceItem._id,
-                          control: {
-                              status: true,
-                              intensity: value * 100,
-                          },
-                      })
-                  )
-                : await dispatch(
-                      thunkControlDevice({
-                          deviceId: deviceItem._id,
-                          control: {
-                              status: false,
-                              intensity: value * 100,
-                          },
-                      })
-                  );
+            if (!controlAC) {
+                await dispatch(
+                    thunkControlDevice({
+                        deviceId: deviceItem._id,
+                        control: {
+                            status: true,
+                            intensity: value * 100,
+                        },
+                    })
+                );
+            } else {
+                await dispatch(
+                    thunkControlDevice({
+                        deviceId: deviceItem._id,
+                        control: {
+                            status: false,
+                            intensity: value * 100,
+                        },
+                    })
+                );
+            }
         };
         handleControlAC();
 
