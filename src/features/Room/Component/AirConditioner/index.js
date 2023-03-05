@@ -31,23 +31,30 @@ function AirConditioner(props) {
         roomsList?.filter((room) => room._id === id)[0]?.roomName;
     const [controlAC, setControlAC] = useState(deviceItem?.control?.status);
     const [controlAutoAC, setControlAutoAC] = useState(false);
-    const [value, setValue] = useState(
-        (deviceItem?.control?.intensity / 100) 
-    );
+    const [value, setValue] = useState(deviceItem?.control?.intensity / 100);
     const stepValue = (v) => Math.round(v * 16) / 16;
 
     useEffect(() => {
         const handleControlAC = async () => {
-            controlAC &&
-                (await dispatch(
-                    thunkControlDevice({
-                        deviceId: deviceItem._id,
-                        control: {
-                            status: true,
-                            intensity: value * 100,
-                        },
-                    })
-                ));
+            controlAC
+                ? await dispatch(
+                      thunkControlDevice({
+                          deviceId: deviceItem._id,
+                          control: {
+                              status: true,
+                              intensity: value * 100,
+                          },
+                      })
+                  )
+                : await dispatch(
+                      thunkControlDevice({
+                          deviceId: deviceItem._id,
+                          control: {
+                              status: false,
+                              intensity: value * 100,
+                          },
+                      })
+                  );
         };
         handleControlAC();
 
