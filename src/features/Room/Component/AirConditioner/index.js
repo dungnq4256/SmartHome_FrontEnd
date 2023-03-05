@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./style.scss";
-import ToggleSwitchButton from "general/components/ToggleSwitchButton";
+import ToggleSwitchControl from "general/components/ToggleSwitchControl";
 import { useState } from "react";
 import {
     CircularInput,
@@ -175,7 +175,7 @@ function AirConditioner(props) {
                                     </div>
                                 </div>
                                 <div className="d-flex flex-fill justify-content-end">
-                                    <ToggleSwitchButton
+                                    <ToggleSwitchControl
                                         // value={item.control.status}
                                         value={controlAC}
                                         onChange={() =>
@@ -220,7 +220,7 @@ function AirConditioner(props) {
                                     </div>
                                 </div>
                                 <div className="d-flex flex-fill justify-content-end">
-                                    <ToggleSwitchButton
+                                    <ToggleSwitchControl
                                         // value={item.control.status}
                                         value={controlAutoAC}
                                         onChange={() =>

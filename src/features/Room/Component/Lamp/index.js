@@ -53,17 +53,7 @@ function Lamp(props) {
                                 </div>
                                 <div className="d-flex flex-fill justify-content-end">
                                     <ToggleSwitchButton
-                                        value={item.control.status}
-                                        onChange={async () => {
-                                            await dispatch(
-                                                thunkControlDevice({
-                                                    deviceId: item._id,
-                                                    control: {
-                                                        status: !(item.control.status),
-                                                    },
-                                                })
-                                            );
-                                        }}
+                                        deviceItem={item}
                                     />
                                 </div>
                             </div>
