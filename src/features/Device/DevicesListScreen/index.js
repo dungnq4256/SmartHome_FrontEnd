@@ -50,10 +50,9 @@ function DevicesListScreen(props) {
                         <div className="row">
                             {devicesListOfHome?.filter(
                                 (device) =>
-                                    device.deviceType ===
-                                        "Cảm biến nhiệt độ và độ ẩm" ||
+                                    device.deviceType === "Cảm biến nhiệt độ" ||
                                     device.deviceType === "Cảm biến khói" ||
-                                    device.deviceType === "Cảm biến độ sáng" ||
+                                    device.deviceType === "Cảm biến độ ẩm" ||
                                     device.deviceType === "Cảm biến động tĩnh"
                             ).length > 0 && (
                                 <Sensor
@@ -61,11 +60,11 @@ function DevicesListScreen(props) {
                                     sensorsList={devicesListOfHome?.filter(
                                         (device) =>
                                             device.deviceType ===
-                                                "Cảm biến nhiệt độ và độ ẩm" ||
+                                                "Cảm biến nhiệt độ" ||
                                             device.deviceType ===
                                                 "Cảm biến khói" ||
                                             device.deviceType ===
-                                                "Cảm biến độ sáng" ||
+                                                "Cảm biến độ ẩm" ||
                                             device.deviceType ===
                                                 "Cảm biến động tĩnh"
                                     )}
@@ -158,7 +157,9 @@ function DevicesListScreen(props) {
                         </div>
                     </div>
                 ) : (
-                    <div>Chưa có thiết bị</div>
+                    <div className="d-flex justify-content-center align-items-center fs-4 mt-30">
+                        Chưa có thiết bị
+                    </div>
                 )}
             </div>
         </BaseLayout>

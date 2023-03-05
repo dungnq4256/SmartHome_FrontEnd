@@ -1,9 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./style.scss";
+import { thunkControlDevice } from "features/Device/deviceSlice";
 import ToggleSwitchButton from "general/components/ToggleSwitchButton";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import "./style.scss";
 
 Security.propTypes = {
     hideRoomName: PropTypes.bool,
@@ -17,10 +16,9 @@ Security.defaultProps = {
 
 function Security(props) {
     const { devicesList, hideRoomName } = props;
-    const [valueSecurity, setValueSecurity] = useState(true);
+    const dispatch = useDispatch();
     const {roomsList} = useSelector(state => state?.room);
     const renderRoomName = (id) => roomsList?.filter(room => room._id === id)[0]?.roomName;
-    console.log(valueSecurity);
     return (
         <div className="col-12 col-md-6">
             <div className="d-flex flex-column my-5 p-2 border-1 bg-white shadow-sm rounded-xl">
@@ -33,7 +31,7 @@ function Security(props) {
                             <div
                                 className="d-flex my-5 p-2 border-1 rounded-xl"
                                 style={{
-                                    backgroundColor: valueSecurity
+                                    backgroundColor: item.control.status
                                         ? "#3D99FF"
                                         : "#F0F4F9",
                                 }}
@@ -42,7 +40,7 @@ function Security(props) {
                                     <div
                                         className="Security_Name"
                                         style={{
-                                            color: valueSecurity && "#fff",
+                                            color: item.control.status && "#fff",
                                         }}
                                     >
                                         {item.deviceName}
@@ -50,7 +48,7 @@ function Security(props) {
                                     <div
                                         className="Security_Type"
                                         style={{
-                                            color: valueSecurity && "#dfdfdf",
+                                            color: item.control.status && "#dfdfdf",
                                         }}
                                     >
                                         {hideRoomName ? item.deviceType : renderRoomName(item.roomId)}
@@ -58,11 +56,18 @@ function Security(props) {
                                 </div>
                                 <div className="d-flex flex-fill justify-content-end">
                                     <ToggleSwitchButton
-                                        // value={item.control.status}
-                                        value={valueSecurity}
-                                        onChange={() =>
-                                            setValueSecurity(!valueSecurity)
-                                        }
+                                        value={item.control.status}
+                                        onChange={async () => {
+                                            await dispatch(
+                                                thunkControlDevice({
+                                                    deviceId: item._id,
+                                                    control: {
+                                                        status: !item
+                                                            .control.status,
+                                                    },
+                                                })
+                                            );
+                                        }}
                                     />
                                 </div>
                             </div>

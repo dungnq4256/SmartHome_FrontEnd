@@ -13,9 +13,21 @@ const deviceApi = {
         return axiosClient.delete(url, {params});
     },
 
-    //get device data
-    getDeviceData: (params) => {
-        const url = '/device/detail';
+    //control Device
+    controlDevice: (params) => {
+        const url = '/device/control';
+        return axiosClient.post(url, params);
+    },
+
+    //get temperature
+    getTemperature: (params) => {
+        const url = '/device/temperature';
+        return axiosClient.get(url, {params});
+    },
+
+    //get humidity
+    getHumidity: (params) => {
+        const url = '/device/humidity';
         return axiosClient.get(url, {params});
     },
 

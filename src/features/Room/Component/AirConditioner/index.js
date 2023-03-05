@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./style.scss";
 import ToggleSwitchButton from "general/components/ToggleSwitchButton";
@@ -10,7 +10,8 @@ import {
     CircularThumb,
 } from "react-circular-input";
 import AppButton from "general/components/AppButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { thunkControlDevice } from "features/Device/deviceSlice";
 
 AirConditioner.propTypes = {
     deviceItem: PropTypes.object,
@@ -24,29 +25,53 @@ AirConditioner.defaultProps = {
 
 function AirConditioner(props) {
     const { deviceItem, hideRoomName } = props;
-    const [controlAC, setControlAC] = useState(true);
+    const dispatch = useDispatch();
     const { roomsList } = useSelector((state) => state?.room);
     const renderRoomName = (id) =>
         roomsList?.filter((room) => room._id === id)[0]?.roomName;
-    const [value, setValue] = useState(0);
+    const [controlAC, setControlAC] = useState(deviceItem?.control?.status);
+    const [controlAutoAC, setControlAutoAC] = useState(false);
+    const [value, setValue] = useState(
+        (deviceItem?.control?.intensity / 100) 
+    );
     const stepValue = (v) => Math.round(v * 16) / 16;
-    console.log(value * 16 + 16);
+
+    useEffect(() => {
+        const handleControlAC = async () => {
+            controlAC &&
+                (await dispatch(
+                    thunkControlDevice({
+                        deviceId: deviceItem._id,
+                        control: {
+                            status: true,
+                            intensity: value * 100,
+                        },
+                    })
+                ));
+        };
+        handleControlAC();
+
+        return () => {};
+    }, [value, controlAC]);
+
     return (
         <div className="col-12 col-md-6">
             <div className="d-flex flex-column my-5 p-2 border-1 bg-white shadow-sm rounded-xl">
                 <div className="d-flex m-3">
                     <div className="Camera_Name me-1">
                         {deviceItem?.deviceName}
-                        {!hideRoomName && <span
-                            style={{
-                                fontSize: "0.85rem",
-                                fontWeight: "500",
-                                color: "#bdbdbd",
-                            }}
-                        >
-                            {" - "}
-                            {renderRoomName(deviceItem.roomId)}
-                        </span>}
+                        {!hideRoomName && (
+                            <span
+                                style={{
+                                    fontSize: "0.85rem",
+                                    fontWeight: "500",
+                                    color: "#bdbdbd",
+                                }}
+                            >
+                                {" - "}
+                                {renderRoomName(deviceItem.roomId)}
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="AirConditioner row">
@@ -153,7 +178,7 @@ function AirConditioner(props) {
                             <div
                                 className="d-flex my-10 p-2 border-1 rounded-xl"
                                 style={{
-                                    backgroundColor: controlAC
+                                    backgroundColor: controlAutoAC
                                         ? "#3D99FF"
                                         : "#F0F4F9",
                                 }}
@@ -161,14 +186,16 @@ function AirConditioner(props) {
                                 <div className="d-flex flex-column p-5">
                                     <div
                                         className="AirConditioner_Name"
-                                        style={{ color: controlAC && "#fff" }}
+                                        style={{
+                                            color: controlAutoAC && "#fff",
+                                        }}
                                     >
                                         Hẹn giờ
                                     </div>
                                     <div
                                         className="AirConditioner_Type d-flex"
                                         style={{
-                                            color: controlAC && "#dfdfdf",
+                                            color: controlAutoAC && "#dfdfdf",
                                         }}
                                     >
                                         <input
@@ -186,9 +213,9 @@ function AirConditioner(props) {
                                 <div className="d-flex flex-fill justify-content-end">
                                     <ToggleSwitchButton
                                         // value={item.control.status}
-                                        value={controlAC}
+                                        value={controlAutoAC}
                                         onChange={() =>
-                                            setControlAC(!controlAC)
+                                            setControlAutoAC(!controlAutoAC)
                                         }
                                     />
                                 </div>

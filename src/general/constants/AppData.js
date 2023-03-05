@@ -71,8 +71,8 @@ const AppData = {
     ],
     sensor: [
         {
-            value: "Cảm biến nhiệt độ và độ ẩm",
-            text: "Nhiệt độ và độ ẩm",
+            value: "Cảm biến nhiệt độ",
+            text: "Cảm biến nhiệt độ",
             image: require("../../assets/images/nhietdo.png"),
         },
         {
@@ -81,9 +81,9 @@ const AppData = {
             image: require("../../assets/images/khoi.png"),
         },
         {
-            value: "Cảm biến độ sáng",
-            text: "Cảm biến độ sáng",
-            image: require("../../assets/images/anhsang.png"),
+            value: "Cảm biến độ ẩm",
+            text: "Cảm biến độ ẩm",
+            image: require("../../assets/images/nhietdo.png"),
         },
         {
             value: "Cảm biến động tĩnh",

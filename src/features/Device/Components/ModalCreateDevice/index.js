@@ -40,13 +40,12 @@ function ModalCreateDevice(props) {
 
     const { isCreatingDevice } = useSelector((state) => state?.device);
     const { currentHome } = useSelector((state) => state?.home);
-    const { roomsList, currentRoom } = useSelector((state) => state?.room);
 
     const roomOptions = [];
-    for (let i = 0; i < roomsList?.length; i++) {
+    for (let i = 0; i < currentHome?.roomsList?.length; i++) {
         roomOptions.push({
-            value: roomsList[i]._id,
-            text: roomsList[i].roomName,
+            value: currentHome?.roomsList[i]._id,
+            text: currentHome?.roomsList[i].roomName,
         });
     }
 
@@ -77,11 +76,7 @@ function ModalCreateDevice(props) {
                     await dispatch(
                         thunkGetRoomsList({ homeId: currentHome._id })
                     );
-                    if (currentRoom) {
-                        await dispatch(
-                            thunkGetRoomData({ roomId: currentRoom._id })
-                        );
-                    }
+                    
                 }
             } catch (error) {
                 console.log(` error: ${error.message}`);

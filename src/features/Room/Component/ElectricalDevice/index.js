@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import "./style.scss";
 import ToggleSwitchButton from "general/components/ToggleSwitchButton";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { thunkControlDevice } from "features/Device/deviceSlice";
 
 ElectricalDevice.propTypes = {
     devicesList: PropTypes.array,
@@ -17,7 +18,7 @@ ElectricalDevice.defaultProps = {
 
 function ElectricalDevice(props) {
     const { devicesList, hideRoomName } = props;
-    const [valueElectricalDevice, setValueElectricalDevice] = useState(true);
+    const dispatch = useDispatch();
     const [mode, setMode] = useState(1);
     const { roomsList } = useSelector((state) => state?.room);
     const renderRoomName = (id) =>
@@ -92,13 +93,18 @@ function ElectricalDevice(props) {
                                 </div>
                                 <div className="d-flex flex-fill justify-content-end">
                                     <ToggleSwitchButton
-                                        // value={item.control.status}
-                                        value={valueElectricalDevice}
-                                        onChange={() =>
-                                            setValueElectricalDevice(
-                                                !valueElectricalDevice
-                                            )
-                                        }
+                                        value={item.control.status}
+                                        onChange={async () => {
+                                            await dispatch(
+                                                thunkControlDevice({
+                                                    deviceId: item._id,
+                                                    control: {
+                                                        status: !item
+                                                            .control.status,
+                                                    },
+                                                })
+                                            );
+                                        }}
                                     />
                                 </div>
                             </div>

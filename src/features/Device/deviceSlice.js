@@ -22,6 +22,30 @@ export const thunkDeleteDevice = createAsyncThunk(
     }
 );
 
+export const thunkControlDevice = createAsyncThunk(
+    "device/control",
+    async (params) => {
+        const res = await deviceApi.controlDevice(params);
+        console.log(res);
+        return res;
+    }
+);
+
+export const thunkGetTemperature = createAsyncThunk(
+    "device/temperature",
+    async (params) => {
+        const res = await deviceApi.getTemperature(params);
+        return res;
+    }
+);
+export const thunkGetHumidity = createAsyncThunk(
+    "device/humidity",
+    async (params) => {
+        const res = await deviceApi.getHumidity(params);
+        return res;
+    }
+);
+
 export const thunkGetDeviceData = createAsyncThunk(
     "device/detail",
     async (params) => {
@@ -83,10 +107,7 @@ const deviceSlice = createSlice({
         updateDevicesListData: (state, action) => {
             return {
                 ...state,
-                devicesList: [
-                    ...state.devicesList,
-                    ...action.payload,
-                ],
+                devicesList: [...state.devicesList, ...action.payload],
             };
         },
     },
@@ -118,6 +139,17 @@ const deviceSlice = createSlice({
             const { result, deviceData } = action.payload;
             if (result === "success") {
                 state.currentDevice = deviceData;
+            }
+        },
+
+        [thunkControlDevice.fulfilled]: (state, action) => {
+            const { status, currentDevice } = action.payload;
+                const deviceId = action.meta.arg.deviceId;
+                console.log(deviceId);
+                for (let i = 0; i < state.devicesListOfHome.length; i++) {
+                    if (state.devicesListOfHome[i]._id === deviceId) {
+                        state.devicesListOfHome[i] = currentDevice;
+                    }
             }
         },
 
