@@ -2,6 +2,7 @@ import AirConditioner from "features/Room/Component/AirConditioner";
 import Camera from "features/Room/Component/Camera";
 import ElectricalDevice from "features/Room/Component/ElectricalDevice";
 import Lamp from "features/Room/Component/Lamp";
+import PowerSwitch from "features/Room/Component/PowerSwitch";
 import Security from "features/Room/Component/Security";
 import Sensor from "features/Room/Component/Sensor";
 import { thunkGetRoomsList } from "features/Room/roomSlice";
@@ -21,10 +22,10 @@ function DevicesListScreen(props) {
     const { devicesListOfHome, isGettingDevicesList } = useSelector(
         (state) => state?.device
     );
-    
+
     useEffect(() => {
-        document.title = "Trang danh sách thiết bị | SHOME"
-     }, []);
+        document.title = "Trang danh sách thiết bị | SHOME";
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -156,6 +157,19 @@ function DevicesListScreen(props) {
                                             device.deviceType ===
                                                 "Máy lọc không khí" ||
                                             device.deviceType === "Máy hút ẩm"
+                                    )}
+                                />
+                            )}
+                            {devicesListOfHome?.filter(
+                                (device) =>
+                                    device.deviceType === "Công tắc" ||
+                                    device.deviceType === "Ổ cắm"
+                            ).length > 0 && (
+                                <PowerSwitch
+                                    devicesList={devicesListOfHome?.filter(
+                                        (device) =>
+                                            device.deviceType === "Công tắc" ||
+                                            device.deviceType === "Ổ cắm"
                                     )}
                                 />
                             )}

@@ -8,6 +8,7 @@ import Camera from "../Component/Camera";
 import ElectricalDevice from "../Component/ElectricalDevice";
 import Lamp from "../Component/Lamp";
 import ModalCreateRoom from "../Component/ModalCreateRoom";
+import PowerSwitch from "../Component/PowerSwitch";
 import Security from "../Component/Security";
 import Sensor from "../Component/Sensor";
 import { thunkGetRoomData, thunkGetRoomsList } from "../roomSlice";
