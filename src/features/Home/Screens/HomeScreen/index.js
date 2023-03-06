@@ -23,6 +23,10 @@ function HomeScreen(props) {
     const [showModalDeleteHome, setShowModalDeleteHome] = useState(false);
 
     useEffect(() => {
+        document.title = "Trang thông tin nhà | SHOME"
+     }, []);
+
+    useEffect(() => {
         const fetchData = async () => {
             await dispatch(thunkGetRoomsList({ homeId: currentHome._id }));
             await dispatch(

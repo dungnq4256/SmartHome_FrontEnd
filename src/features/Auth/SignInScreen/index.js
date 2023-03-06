@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./style.scss";
 import BaseTextField from "general/components/Form/BaseTextField";
@@ -22,6 +22,10 @@ const sTag = "[SignInScreen]";
 function SignInScreen(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        document.title = "Trang đăng nhập | SHOME"
+     }, []);
 
     const formik = useFormik({
         initialValues: {

@@ -34,6 +34,10 @@ function RoomsListScreen(props) {
     );
 
     useEffect(() => {
+        document.title = "Trang danh sách phòng | SHOME"
+     }, []);
+
+    useEffect(() => {
         const fetchData = async () => {
             await dispatch(
                 thunkGetDevicesListOfHome({ homeId: currentHome._id })

@@ -46,7 +46,6 @@ function ModalChangeAvatar(props) {
     }
     function handleChangeAvatarInput(e) {
         const file = e.target.files[0];
-        console.log(file);
 
         if (file) {
             file.preview = URL.createObjectURL(file);
@@ -61,7 +60,6 @@ function ModalChangeAvatar(props) {
             formData.append("avatar", editAvatar);
             try {
                 const res = await authApi.updateProfile(formData);
-                console.log(res);
                 const { result } = res;
                 if (result === "success") {
                     dispatch(thunkGetAccountInfor());

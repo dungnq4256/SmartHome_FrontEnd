@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./style.scss";
 import AppResource from "general/constants/AppResource";
@@ -18,6 +18,11 @@ const sTag = '[SignUpScreen]'
 
 function SignUpScreen(props) {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = "Trang đăng ký | SHOME"
+     }, []);
+
     const formik = useFormik({
         initialValues: {
             fullname: '',

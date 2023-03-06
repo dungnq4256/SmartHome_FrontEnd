@@ -8,7 +8,6 @@ export const thunkCreateRoom = createAsyncThunk(
     "room/create",
     async (params) => {
         const res = await roomApi.createRoom(params);
-        console.log(res);
         return res;
     }
 );
@@ -17,7 +16,6 @@ export const thunkDeleteRoom = createAsyncThunk(
     "room/delete",
     async (params) => {
         const res = await roomApi.deleteRoom(params);
-        console.log(res);
         return res;
     }
 );
@@ -26,7 +24,6 @@ export const thunkGetRoomData = createAsyncThunk(
     "room/detail",
     async (params) => {
         const res = await roomApi.getRoomData(params);
-        console.log(res);
         return res;
     }
 );
@@ -35,7 +32,6 @@ export const thunkGetRoomsList = createAsyncThunk(
     "room/find",
     async (params) => {
         const res = await roomApi.getRoomsList(params);
-        console.log(res);
         return res;
     }
 );
@@ -44,7 +40,6 @@ export const thunkUpdateRoomData = createAsyncThunk(
     "room/update",
     async (params) => {
         const res = await roomApi.updateRoomData(params);
-        console.log(res);
         return res;
     }
 );

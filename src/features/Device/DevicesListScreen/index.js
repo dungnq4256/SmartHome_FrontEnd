@@ -21,6 +21,11 @@ function DevicesListScreen(props) {
     const { devicesListOfHome, isGettingDevicesList } = useSelector(
         (state) => state?.device
     );
+    
+    useEffect(() => {
+        document.title = "Trang danh sách thiết bị | SHOME"
+     }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(thunkGetRoomsList({ homeId: currentHome._id }));

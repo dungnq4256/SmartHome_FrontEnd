@@ -39,7 +39,6 @@ function ModalCreateRoom(props) {
             const params = { homeId: homeId, ...values };
             try {
                 const res = await dispatch(thunkCreateRoom(params));
-                console.log(res);
                 if (res.payload.result === "success") {
                     handleClose();
                     formik.handleReset();

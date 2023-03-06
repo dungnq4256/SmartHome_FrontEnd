@@ -23,7 +23,6 @@ function InforOfHome(props) {
         },
         onSubmit: async (values) => {
             const params = { _id: currentHome._id, ...values };
-            console.log(params);
             try {
                 const res = await dispatch(thunkUpdateHomeData(params));
                 if (res) {

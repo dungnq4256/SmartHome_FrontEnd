@@ -43,6 +43,10 @@ function Dashboard(props) {
         (home) => home.status === "requesting"
     );
 
+    useEffect(() => {
+        document.title = "Trang quản lý nhà | SHOME"
+     }, []);
+
     function handleNavigate(url) {
         navigate(url);
     }

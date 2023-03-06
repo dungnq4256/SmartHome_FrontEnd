@@ -32,6 +32,9 @@ function Account(props) {
     const requestingList = homeList?.filter(
         (home) => home.status === "requesting"
     );
+    useEffect(() => {
+        document.title = "Trang cá nhân | SHOME"
+     }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -43,7 +46,6 @@ function Account(props) {
         },
         onSubmit: async (values) => {
             const params = { ...values };
-            console.log(params);
             try {
                 const res = await dispatch(thunkEditProfile(params));
                 if (res) {

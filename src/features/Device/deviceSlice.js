@@ -8,7 +8,6 @@ export const thunkCreateDevice = createAsyncThunk(
     "device/create",
     async (params) => {
         const res = await deviceApi.createDevice(params);
-        console.log(res);
         return res;
     }
 );
@@ -17,7 +16,6 @@ export const thunkDeleteDevice = createAsyncThunk(
     "device/delete",
     async (params) => {
         const res = await deviceApi.deleteDevice(params);
-        console.log(res);
         return res;
     }
 );
@@ -26,7 +24,6 @@ export const thunkControlDevice = createAsyncThunk(
     "device/control",
     async (params) => {
         const res = await deviceApi.controlDevice(params);
-        console.log(res);
         return res;
     }
 );
@@ -50,7 +47,6 @@ export const thunkGetDeviceData = createAsyncThunk(
     "device/detail",
     async (params) => {
         const res = await deviceApi.getDeviceData(params);
-        console.log(res);
         return res;
     }
 );
@@ -59,7 +55,6 @@ export const thunkGetDevicesListOfHome = createAsyncThunk(
     "device/find-by-home",
     async (params) => {
         const res = await deviceApi.getDevicesListOfHome(params);
-        console.log(res);
         return res;
     }
 );
@@ -68,7 +63,6 @@ export const thunkGetDevicesListOfRoom = createAsyncThunk(
     "device/find-by-room",
     async (params) => {
         const res = await deviceApi.getDevicesListOfRoom(params);
-        console.log(res);
         return res;
     }
 );
@@ -77,7 +71,6 @@ export const thunkUpdateDeviceData = createAsyncThunk(
     "device/update",
     async (params) => {
         const res = await deviceApi.updateDeviceData(params);
-        console.log(res);
         return res;
     }
 );

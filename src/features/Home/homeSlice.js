@@ -9,7 +9,6 @@ export const thunkCreateHome = createAsyncThunk(
     "home/create-home",
     async (params) => {
         const res = await homeApi.createHome(params);
-        console.log(res);
         return res;
     }
 );
@@ -18,7 +17,6 @@ export const thunkDeleteHome = createAsyncThunk(
     "home/delete-home",
     async (params) => {
         const res = await homeApi.deleteHome(params);
-        console.log(res);
         return res;
     }
 );
@@ -27,7 +25,6 @@ export const thunkGetHomeData = createAsyncThunk(
     "home/get-home-data",
     async (params) => {
         const res = await homeApi.getHomeData(params);
-        console.log(res);
         return res;
     }
 );
@@ -36,7 +33,6 @@ export const thunkUpdateHomeData = createAsyncThunk(
     "home/update-home-data",
     async (params) => {
         const res = await homeApi.updateHomeData(params);
-        console.log(res);
         return res;
     }
 );
@@ -52,9 +48,7 @@ export const thunkGetOtherHomesList = createAsyncThunk(
 export const thunkRequestToJoinHome = createAsyncThunk(
     "home/request-to-join-home",
     async (params) => {
-        console.log(params);
         const res = await homeApi.requestToJoinHome(params);
-        console.log(res);
         return res;
     }
 );
@@ -63,7 +57,6 @@ export const thunkConfirmJoinHome = createAsyncThunk(
     "home/confirm-join-home",
     async (params) => {
         const res = await homeApi.confirmJoinHome(params);
-        console.log(res);
         return res;
     }
 );
@@ -71,9 +64,7 @@ export const thunkConfirmJoinHome = createAsyncThunk(
 export const thunkRefuseJoinHome = createAsyncThunk(
     "home/refuse-join-home",
     async (params) => {
-        console.log(params);
         const res = await homeApi.refuseJoinHome(params);
-        console.log(res);
         return res;
     }
 );
@@ -82,7 +73,6 @@ export const thunkDeleteMember = createAsyncThunk(
     "home/delete-member",
     async (params) => {
         const res = await homeApi.deleteMember(params);
-        console.log(res);
         return res;
     }
 );
