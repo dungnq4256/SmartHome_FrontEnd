@@ -16,23 +16,10 @@ ToggleSwitchButton.defaultProps = {
 function ToggleSwitchButton(props) {
     const { deviceItem } = props;
     const dispatch = useDispatch();
-    const [controlDevice, setControlDevice] = useState(deviceItem?.control?.status);
+    const [controlDevice, setControlDevice] = useState(
+        deviceItem?.control?.status
+    );
 
-    useEffect(() => {
-        const handleControlAC = async () => {
-                await dispatch(
-                    thunkControlDevice({
-                        deviceId: deviceItem._id,
-                        control: {
-                            status: controlDevice,
-                        },
-                    })
-                );
-        };
-        handleControlAC();
-
-        return () => {};
-    }, [controlDevice]);
 
     return (
         <div className="d-flex">
@@ -40,7 +27,17 @@ function ToggleSwitchButton(props) {
                 <input
                     type="checkbox"
                     checked={controlDevice ?? false}
-                    onChange={() => setControlDevice(!controlDevice)}
+                    onChange={async() => {
+                        setControlDevice(!controlDevice);
+                        await dispatch(
+                            thunkControlDevice({
+                                deviceId: deviceItem._id,
+                                control: {
+                                    status: !controlDevice,
+                                },
+                            })
+                        );
+                    }}
                 />
                 <span className="sliderr"></span>
             </label>

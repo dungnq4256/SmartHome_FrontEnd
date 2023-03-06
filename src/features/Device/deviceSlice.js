@@ -137,11 +137,11 @@ const deviceSlice = createSlice({
 
         [thunkControlDevice.fulfilled]: (state, action) => {
             const { status, currentDevice } = action.payload;
-                const deviceId = action.meta.arg.deviceId;
-                for (let i = 0; i < state.devicesListOfHome.length; i++) {
-                    if (state.devicesListOfHome[i]._id === deviceId) {
-                        state.devicesListOfHome[i] = currentDevice;
-                    }
+            const deviceId = action.meta.arg.deviceId;
+            for (let i = 0; i < state.devicesListOfHome.length; i++) {
+                if (state.devicesListOfHome[i]._id === deviceId) {
+                    state.devicesListOfHome[i].control = action.meta.arg.control;
+                }
             }
         },
 

@@ -68,7 +68,8 @@ function Sensor(props) {
                                 >
                                     <div className="d-flex flex-column p-5">
                                         <div className="Sensor_Name">
-                                            Nhiệt độ: {temperature || "__"} °C
+                                            Nhiệt độ:{" "}
+                                            {parseFloat(temperature) || "__"} °C
                                         </div>
                                         <div className="Sensor_Type">
                                             {!hideRoomName &&
@@ -87,7 +88,8 @@ function Sensor(props) {
                                 >
                                     <div className="d-flex flex-column p-5">
                                         <div className="Sensor_Name">
-                                            Độ ẩm: {humidity || "__"} %
+                                            Độ ẩm:{" "}
+                                            {parseFloat(humidity) || "__"} %
                                         </div>
                                         <div className="Sensor_Type">
                                             {!hideRoomName &&
@@ -131,9 +133,7 @@ function Sensor(props) {
                                         </div>
                                     </div>
                                     <div className="d-flex flex-fill justify-content-end">
-                                        <ToggleSwitchButton
-                                            deviceItem={item}
-                                        />
+                                        <ToggleSwitchButton deviceItem={item} />
                                     </div>
                                 </div>
                             </div>

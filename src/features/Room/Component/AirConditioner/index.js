@@ -34,6 +34,7 @@ function AirConditioner(props) {
     const [value, setValue] = useState(
         (deviceItem?.control?.intensity - 200) / 800
     );
+   
     const stepValue = (v) => Math.round(v * 16) / 16;
 
     useEffect(() => {
