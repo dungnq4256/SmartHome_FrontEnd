@@ -34,8 +34,8 @@ function RoomsListScreen(props) {
     );
 
     useEffect(() => {
-        document.title = "Trang danh sách phòng | SHOME"
-     }, []);
+        document.title = "Trang danh sách phòng | SHOME";
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -214,9 +214,11 @@ function RoomsListScreen(props) {
                                     )}
                                 </div>
                             ) : (
-                                <div className="d-flex justify-content-center align-items-center fs-4 mt-30">
-                                    Chưa có thiết bị
-                                </div>
+                                selected.length > 0 && (
+                                    <div className="d-flex justify-content-center align-items-center fs-4 mt-30">
+                                        Chưa có thiết bị
+                                    </div>
+                                )
                             )}
                         </div>
                     )}
