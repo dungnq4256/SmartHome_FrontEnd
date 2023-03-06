@@ -212,6 +212,21 @@ function RoomsListScreen(props) {
                                             )}
                                         />
                                     )}
+                                    {deviceListOfCurrentRoom?.filter(
+                                        (device) =>
+                                            device.deviceType === "Công tắc" ||
+                                            device.deviceType ===
+                                                "Ổ cắm"
+                                    ).length > 0 && (
+                                        <PowerSwitch
+                                            devicesList={deviceListOfCurrentRoom?.filter(
+                                                (device) =>
+                                                device.deviceType === "Công tắc" ||
+                                                device.deviceType ===
+                                                    "Ổ cắm"
+                                            )}
+                                        />
+                                    )}
                                 </div>
                             ) : (
                                 selected.length > 0 && (
