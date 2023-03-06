@@ -42,7 +42,7 @@ function AirConditioner(props) {
                 thunkControlDevice({
                     deviceId: deviceItem._id,
                     control: {
-                        status: !controlAC,
+                        status: controlAC,
                         intensity: value * 800 + 200,
                     },
                 })

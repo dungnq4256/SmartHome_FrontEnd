@@ -24,7 +24,7 @@ function ToggleSwitchButton(props) {
                     thunkControlDevice({
                         deviceId: deviceItem._id,
                         control: {
-                            status: !controlDevice,
+                            status: controlDevice,
                         },
                     })
                 );
