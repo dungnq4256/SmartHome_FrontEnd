@@ -32,25 +32,45 @@ function AirConditioner(props) {
     const [controlAC, setControlAC] = useState(deviceItem?.control?.status);
     console.log(controlAC);
     const [controlAutoAC, setControlAutoAC] = useState(false);
-    const [value, setValue] = useState((deviceItem?.control?.intensity - 200)/ 800);
+    const [value, setValue] = useState(
+        (deviceItem?.control?.intensity - 200) / 800
+    );
     const stepValue = (v) => Math.round(v * 16) / 16;
 
     useEffect(() => {
         const handleControlAC = async () => {
-                await dispatch(
-                    thunkControlDevice({
-                        deviceId: deviceItem._id,
-                        control: {
-                            status: !controlAC,
-                            intensity: value * 800 + 200,
-                        },
-                    })
-                );
+            await dispatch(
+                thunkControlDevice({
+                    deviceId: deviceItem._id,
+                    control: {
+                        status: !controlAC,
+                        intensity: value * 800 + 200,
+                    },
+                })
+            );
         };
         handleControlAC();
 
         return () => {};
-    }, [value, controlAC]);
+    }, [controlAC]);
+
+    useEffect(() => {
+        const handleControlAC = async () => {
+            deviceItem?.control?.status &&
+                (await dispatch(
+                    thunkControlDevice({
+                        deviceId: deviceItem._id,
+                        control: {
+                            status: true,
+                            intensity: value * 800 + 200,
+                        },
+                    })
+                ));
+        };
+        handleControlAC();
+
+        return () => {};
+    }, [value]);
 
     return (
         <div className="col-12 col-md-6">
