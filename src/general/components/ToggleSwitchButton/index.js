@@ -20,25 +20,14 @@ function ToggleSwitchButton(props) {
 
     useEffect(() => {
         const handleControlAC = async () => {
-            if (!controlDevice) {
                 await dispatch(
                     thunkControlDevice({
                         deviceId: deviceItem._id,
                         control: {
-                            status: true,
+                            status: !controlDevice,
                         },
                     })
                 );
-            } else {
-                await dispatch(
-                    thunkControlDevice({
-                        deviceId: deviceItem._id,
-                        control: {
-                            status: false,
-                        },
-                    })
-                );
-            }
         };
         handleControlAC();
 
