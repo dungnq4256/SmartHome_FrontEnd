@@ -201,30 +201,59 @@ function RoomsListScreen(props) {
                                                 "Máy lọc không khí" ||
                                             device.deviceType === "Máy hút ẩm"
                                     ).length > 0 && (
-                                        <ElectricalDevice
-                                            devicesList={deviceListOfCurrentRoom?.filter(
-                                                (device) =>
-                                                    device.deviceType ===
-                                                        "Quạt" ||
-                                                    device.deviceType ===
-                                                        "Máy lọc không khí" ||
-                                                    device.deviceType ===
-                                                        "Máy hút ẩm"
-                                            )}
-                                        />
+                                        <div className="col-12 col-md-6">
+                                            <div className="d-flex flex-column my-5 p-2 border-1 bg-white shadow-sm rounded-xl">
+                                                <div className="d-flex m-3">
+                                                    <div className="Camera_Name me-1">
+                                                        Thiết bị điện
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    {deviceListOfCurrentRoom
+                                                        ?.filter(
+                                                            (device) =>
+                                                                device.deviceType ===
+                                                                    "Quạt" ||
+                                                                device.deviceType ===
+                                                                    "Máy lọc không khí" ||
+                                                                device.deviceType ===
+                                                                    "Máy hút ẩm"
+                                                        )
+                                                        .map((item) => (
+                                                            <ElectricalDevice
+                                                                key={item._id}
+                                                                deviceItem={
+                                                                    item
+                                                                }
+                                                            />
+                                                        ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        // <ElectricalDevice
+                                        //     devicesList={deviceListOfCurrentRoom?.filter(
+                                        //         (device) =>
+                                        //             device.deviceType ===
+                                        //                 "Quạt" ||
+                                        //             device.deviceType ===
+                                        //                 "Máy lọc không khí" ||
+                                        //             device.deviceType ===
+                                        //                 "Máy hút ẩm"
+                                        //     )}
+                                        // />
                                     )}
                                     {deviceListOfCurrentRoom?.filter(
                                         (device) =>
                                             device.deviceType === "Công tắc" ||
-                                            device.deviceType ===
-                                                "Ổ cắm"
+                                            device.deviceType === "Ổ cắm"
                                     ).length > 0 && (
                                         <PowerSwitch
                                             devicesList={deviceListOfCurrentRoom?.filter(
                                                 (device) =>
-                                                device.deviceType === "Công tắc" ||
-                                                device.deviceType ===
-                                                    "Ổ cắm"
+                                                    device.deviceType ===
+                                                        "Công tắc" ||
+                                                    device.deviceType ===
+                                                        "Ổ cắm"
                                             )}
                                         />
                                     )}
