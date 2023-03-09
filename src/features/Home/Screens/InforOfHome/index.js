@@ -69,7 +69,7 @@ function InforOfHome(props) {
                         {isEditMode && (
                             <div>
                                 <button
-                                    className="ButtonPrimary px-8 me-3"
+                                    className="ButtonPrimary px-5 px-sm-8 me-sm-3 mb-3 mb-sm-0"
                                     style={{
                                         backgroundColor: "#13b713",
                                     }}
