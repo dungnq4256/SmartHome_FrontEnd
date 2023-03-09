@@ -1,5 +1,5 @@
 import { thunkChangePassword, thunkSignOut } from "app/authSlice";
-import { LogoDark, ShowSideBar, ShowSideBarActive } from "assets/icons/Icons";
+import { LogoDark, LogoSmall, ShowSideBar, ShowSideBarActive } from "assets/icons/Icons";
 import UserHelper from "general/helpers/UserHelper";
 import Utils from "general/utils/Utils";
 import PropTypes from "prop-types";
@@ -100,7 +100,8 @@ function HeaderLandingPage(props) {
                 {showSideBar && <ShowSideBarActive />}
             </div>
             <NavLink to="/home" className="d-flex d-lg-none align-items-center">
-                <LogoDark />
+                <LogoDark className="d-none d-sm-block"/>
+                <LogoSmall height="100%" className="d-block d-sm-none"/>
             </NavLink>
             <div className="d-none d-md-flex fw-bold fs-4 flex-fill justify-content-start mx-5">
                 Xin chào, {currentAccount?.fullname}

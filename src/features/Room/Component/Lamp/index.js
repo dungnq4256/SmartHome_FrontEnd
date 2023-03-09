@@ -29,7 +29,7 @@ function Lamp(props) {
                 </div>
                 <div className="row">
                     {lampsList.map((item, index) => (
-                        <div className="Lamp col-12 col-sm-6" key={index}>
+                        <div className="Lamp col-12 col-sm-6 col-md-12 col-lg-6" key={index}>
                             <div
                                 className="d-flex my-5 p-2 border-1 rounded-xl"
                                 style={{

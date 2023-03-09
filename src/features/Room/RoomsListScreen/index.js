@@ -53,10 +53,10 @@ function RoomsListScreen(props) {
             <div className="container-xxl">
                 <div className="d-flex flex-column">
                     <div
-                        className="d-flex p-3 rounded-lg shadow"
+                        className="d-flex p-3 rounded-lg shadow flex-wrap"
                         style={{ backgroundColor: "#fff" }}
                     >
-                        <div className="d-flex">
+                        <div className="d-flex flex-wrap">
                             {currentHome?.roomsList?.map((room, index) => (
                                 <div
                                     key={index}

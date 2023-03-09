@@ -59,7 +59,7 @@ function DevicesOfHome(props) {
                 </div>
                 <div className="card-body p-0">
                     {devicesListOfHome?.length > 0 && (
-                        <BootstrapTable striped bordered hover>
+                        <BootstrapTable className="BootstrapTable" striped bordered hover>
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -87,7 +87,7 @@ function DevicesOfHome(props) {
                                         <td>
                                             <div>
                                                 <button
-                                                    className="ButtonPrimary px-8 me-3"
+                                                    className="ButtonPrimary px-5 px-sm-8 me-sm-3 mb-3 mb-sm-0"
                                                     style={{
                                                         backgroundColor:
                                                             "#13b713",
@@ -102,7 +102,7 @@ function DevicesOfHome(props) {
                                                     Sửa
                                                 </button>
                                                 <button
-                                                    className="ButtonDanger px-8"
+                                                    className="ButtonDanger px-5 px-sm-8"
                                                     onClick={(e) => {
                                                         setSelectedDevice(item);
                                                         setShowModalDeleteDevice(

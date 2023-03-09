@@ -340,7 +340,7 @@ function Account(props) {
                         </div>
                         <div className="card-body p-0">
                             {ownerList?.length > 0 && (
-                                <BootstrapTable striped bordered hover>
+                                <BootstrapTable className="BootstrapTable" striped bordered hover>
                                     <thead>
                                         <tr>
                                             <th>Nhà</th>
@@ -396,7 +396,7 @@ function Account(props) {
                         </div>
                         <div className="card-body p-0">
                             {requestingList?.length > 0 && (
-                                <BootstrapTable striped bordered hover>
+                                <BootstrapTable className="BootstrapTable"striped bordered hover>
                                     <thead>
                                         <tr>
                                             <th>Nhà</th>

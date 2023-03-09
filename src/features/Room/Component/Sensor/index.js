@@ -59,7 +59,7 @@ function Sensor(props) {
                 <div className="row">
                     {sensorsList.map((item, index) =>
                         item.deviceType === "Cảm biến nhiệt độ" ? (
-                            <div className="Sensor col-12 col-sm-6" key={index}>
+                            <div className="Sensor col-12 col-sm-6 col-md-12 col-lg-6" key={index}>
                                 <div
                                     className="d-flex my-5 p-2 border-1 rounded-xl"
                                     style={{
@@ -79,7 +79,7 @@ function Sensor(props) {
                                 </div>
                             </div>
                         ) : item.deviceType === "Cảm biến độ ẩm" ? (
-                            <div className="Sensor col-12 col-sm-6" key={index}>
+                            <div className="Sensor col-12 col-sm-6 col-md-12 col-lg-6" key={index}>
                                 <div
                                     className="d-flex my-5 p-2 border-1 rounded-xl"
                                     style={{
@@ -99,7 +99,7 @@ function Sensor(props) {
                                 </div>
                             </div>
                         ) : (
-                            <div className="Sensor col-12 col-sm-6" key={index}>
+                            <div className="Sensor col-12 col-sm-6 col-md-12 col-lg-6" key={index}>
                                 <div
                                     className="d-flex my-5 p-2 border-1 rounded-xl"
                                     style={{

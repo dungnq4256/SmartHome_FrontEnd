@@ -34,7 +34,7 @@
 }
 
 .ButtonPrimary {
-    background-color: #3E97FF;
+    background-color: #3e97ff;
     color: #fff;
     font-size: 12px;
     font-weight: 600;
@@ -46,7 +46,7 @@
         background-color: #6fb2ff;
     }
     &-disabled {
-        background-color: #eaeaea ;
+        background-color: #eaeaea;
         color: #303030;
         font-size: 12px;
         font-weight: 600;
@@ -59,7 +59,7 @@
     }
 }
 
-.ButtonDanger{
+.ButtonDanger {
     background-color: #c92f2f;
     color: #fff;
     font-size: 12px;
@@ -74,8 +74,8 @@
 }
 
 .ButtonSecondary {
-    background-color: #eaeaea ;
-    color: #1682FD;
+    background-color: #eaeaea;
+    color: #1682fd;
     font-size: 12px;
     font-weight: 600;
     padding: 10px 16px;
@@ -83,12 +83,12 @@
     border-radius: 5px;
 
     &:hover {
-        background-color: rgb(211, 219, 250) ;
+        background-color: rgb(211, 219, 250);
     }
 }
 
 .ButtonCancel {
-    background-color: #eaeaea ;
+    background-color: #eaeaea;
     color: #303030;
     font-size: 12px;
     font-weight: 600;
@@ -97,6 +97,34 @@
     border-radius: 5px;
 
     &:hover {
-        background-color: rgb(206, 206, 206) ;
+        background-color: rgb(206, 206, 206);
+    }
+}
+
+.BootstrapTable {
+    tbody {
+        tr {
+            cursor: pointer;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .BootstrapTable {
+            tr {
+                font-size: 0.9rem;
+            }
+    }
+    .ButtonPrimary,
+    .ButtonCancel,
+    .ButtonDanger {
+        font-size: 10px;
+        font-weight: 500;
+        padding: 8px 10px;
+    }
+    .ButtonNavigate{
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+    margin: 0 0.1rem;
     }
 }

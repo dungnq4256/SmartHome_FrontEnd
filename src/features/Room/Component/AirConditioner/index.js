@@ -93,7 +93,7 @@ function AirConditioner(props) {
                     </div>
                 </div>
                 <div className="AirConditioner row">
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-lg-6">
                         <div className="d-flex my-5 p-2 border-1 rounded-xl">
                             <div className="d-flex flex-column flex-fill justify-content-center align-items-center">
                                 <CircularInput
@@ -136,7 +136,7 @@ function AirConditioner(props) {
                                 </CircularInput>
                                 <div className="mt-5 d-flex w-100 justify-content-between">
                                     <AppButton
-                                        className={`rounded-lg ButtonPrimary${
+                                        className={`rounded-lg px-5 ButtonPrimary${
                                             value === 0 ? "-disabled" : ""
                                         }`}
                                         disabled={value === 0}
@@ -145,7 +145,7 @@ function AirConditioner(props) {
                                         -
                                     </AppButton>
                                     <AppButton
-                                        className={`rounded-lg ButtonPrimary${
+                                        className={`rounded-lg px-5 ButtonPrimary${
                                             value === 1 ? "-disabled" : ""
                                         }`}
                                         disabled={value === 1}
@@ -157,7 +157,7 @@ function AirConditioner(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-lg-6">
                         <div className="">
                             <div
                                 className="d-flex my-5 p-2 border-1 rounded-xl"
@@ -221,7 +221,7 @@ function AirConditioner(props) {
                                             className="ps-2 BaseTextField_Input rounded border-0"
                                             style={{
                                                 height: "20px",
-                                                width: "40px",
+                                                width: "20px",
                                                 margin: "0.5rem",
                                             }}
                                         />

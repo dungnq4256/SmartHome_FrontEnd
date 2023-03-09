@@ -154,12 +154,12 @@ function Dashboard(props) {
                     </div>
                 </div>
                 <div className="col-lg-8 p-5">
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column ">
                         <div
-                            className="d-flex p-3 rounded-lg shadow"
+                            className="d-flex p-3 rounded-lg shadow flex-wrap"
                             style={{ backgroundColor: "#f1f1f1" }}
                         >
-                            <div className="d-flex">
+                            <div className="d-flex flex-wrap">
                                 <div
                                     className={`ButtonNavigate ${
                                         selected === "owner" &&
@@ -216,7 +216,7 @@ function Dashboard(props) {
                             {selected === "owner" && (
                                 <div>
                                     {ownerList?.length > 0 ? (
-                                        <BootstrapTable striped bordered hover>
+                                        <BootstrapTable className="BootstrapTable" striped bordered hover responsive>
                                             <thead>
                                                 <tr>
                                                     <th>Nhà</th>
@@ -266,7 +266,7 @@ function Dashboard(props) {
                             {selected === "requesting" && (
                                 <div>
                                     {requestingList?.length > 0 ? (
-                                        <BootstrapTable striped bordered hover>
+                                        <BootstrapTable className="BootstrapTable" striped bordered hover>
                                             <thead>
                                                 <tr>
                                                     <th>Nhà</th>
@@ -333,7 +333,7 @@ function Dashboard(props) {
                                                     });
                                                 }}
                                             />
-                                            <BootstrapTable
+                                            <BootstrapTable className="BootstrapTable"
                                                 striped
                                                 bordered
                                                 hover
