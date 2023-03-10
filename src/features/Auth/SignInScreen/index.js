@@ -42,6 +42,8 @@ function SignInScreen(props) {
                     const displayName = UserHelper.getDisplayName(res.account);
                     ToastHelper.showSuccess(`Xin chào, ${displayName}`);
                     navigate("/dashboard");
+                } else {
+                    ToastHelper.showError(`Tài khoản hoặc mật khẩu không chính xác`);
                 }
             } catch (error) {
                 console.log(`${sTag} loggin error: ${error.message}`);
