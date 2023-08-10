@@ -5,8 +5,7 @@ import { thunkGetRoomsList } from "features/Room/roomSlice";
 import BaseLayout from "general/components/BaseLayout";
 import DialogModal from "general/components/DialogModal";
 import ToastHelper from "general/helpers/ToastHelper";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DevicesOfHome from "../DevicesOfHome";
@@ -23,8 +22,8 @@ function HomeScreen(props) {
     const [showModalDeleteHome, setShowModalDeleteHome] = useState(false);
 
     useEffect(() => {
-        document.title = "Trang thông tin nhà | SHOME"
-     }, []);
+        document.title = "Trang thông tin nhà | SHOME";
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,7 +42,6 @@ function HomeScreen(props) {
                 homeId: currentHome._id,
             })
         );
-        console.log(res);
         if (res.payload.result === "success") {
             ToastHelper.showSuccess(`Xóa [${currentHome?.name}] thành công`);
             await dispatch(thunkGetAccountInfor());
@@ -74,6 +72,7 @@ function HomeScreen(props) {
                     onExecute={handleDeleteHome}
                 />
             </div>
+            
         </BaseLayout>
     );
 }

@@ -28,20 +28,20 @@ export const thunkControlDevice = createAsyncThunk(
     }
 );
 
-export const thunkGetTemperature = createAsyncThunk(
-    "device/temperature",
+export const thunkGetTemperatureAndHumidity = createAsyncThunk(
+    "device/temperature-humidity",
     async (params) => {
-        const res = await deviceApi.getTemperature(params);
+        const res = await deviceApi.getTemperatureAndHumidity(params);
         return res;
     }
 );
-export const thunkGetHumidity = createAsyncThunk(
-    "device/humidity",
-    async (params) => {
-        const res = await deviceApi.getHumidity(params);
-        return res;
-    }
-);
+// export const thunkGetHumidity = createAsyncThunk(
+//     "device/humidity",
+//     async (params) => {
+//         const res = await deviceApi.getHumidity(params);
+//         return res;
+//     }
+// );
 
 export const thunkGetDeviceData = createAsyncThunk(
     "device/detail",
@@ -78,16 +78,32 @@ export const thunkUpdateDeviceData = createAsyncThunk(
 const deviceSlice = createSlice({
     name: "device",
     initialState: {
+        isOpenControlDeviceModal: false,
         isGettingDeviceData: false,
         isGettingDevicesList: false,
         isCreatingDevice: false,
         isUpdatingDevice: false,
         isDeletingDevice: false,
         currentDevice: {},
+        temperature: "",
+        humidity: "",
+        lightSensor: "",
         devicesListOfHome: [],
         devicesListOfRoom: [],
     },
     reducers: {
+        setIsOpenControlDeviceModal: (state, action) => {
+            state.isOpenControlDeviceModal = action.payload;
+        },
+        updateTemperatureAndHumidity: (state, action) => {
+            const data = action.payload.data;
+            state.temperature = data.temperature;
+            state.humidity = data.humidity;
+        },
+        updateLightSensorValue: (state, action) => {
+            const data = action.payload.data;
+            state.lightSensor = data.lightSensor;
+        },
         updateCurrentDeviceData: (state, action) => {
             return {
                 ...state,
@@ -97,11 +113,21 @@ const deviceSlice = createSlice({
                 },
             };
         },
-        updateDevicesListData: (state, action) => {
-            return {
-                ...state,
-                devicesList: [...state.devicesList, ...action.payload],
-            };
+        updateDevicesListOfHome: (state, action) => {
+            try {
+                const { deviceId, data, control, automatic } = action.payload;
+                const { devicesListOfHome } = state;
+                for (let i = 0; i < devicesListOfHome.length; i++) {
+                    if (devicesListOfHome[i]._id === deviceId) {
+                        devicesListOfHome[i].data = data;
+                        devicesListOfHome[i].control = control;
+                        devicesListOfHome[i].automatic = automatic;
+                    }
+                }
+                state.devicesListOfHome = devicesListOfHome;
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
     extraReducers: {
@@ -140,7 +166,10 @@ const deviceSlice = createSlice({
             const deviceId = action.meta.arg.deviceId;
             for (let i = 0; i < state.devicesListOfHome.length; i++) {
                 if (state.devicesListOfHome[i]._id === deviceId) {
-                    state.devicesListOfHome[i].control = action.meta.arg.control;
+                    state.devicesListOfHome[i].control =
+                        action.meta.arg.control;
+                    state.devicesListOfHome[i].automatic =
+                        action.meta.arg.automatic;
                 }
             }
         },
@@ -208,5 +237,11 @@ const deviceSlice = createSlice({
 });
 
 const { reducer, actions } = deviceSlice;
-export const { updateCurrentDeviceData, updateDevicesListData } = actions;
+export const {
+    setIsOpenControlDeviceModal,
+    updateTemperatureAndHumidity,
+    updateLightSensorValue,
+    updateCurrentDeviceData,
+    updateDevicesListOfHome,
+} = actions;
 export default reducer;

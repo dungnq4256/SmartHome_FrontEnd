@@ -1,4 +1,7 @@
-import { thunkGetDevicesListOfHome } from "features/Device/deviceSlice";
+import {
+    thunkGetDevicesListOfHome,
+    updateDevicesListOfHome,
+} from "features/Device/deviceSlice";
 import BaseLayout from "general/components/BaseLayout";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +16,7 @@ import Security from "../Component/Security";
 import Sensor from "../Component/Sensor";
 import { thunkGetRoomData, thunkGetRoomsList } from "../roomSlice";
 import "./style.scss";
+import PusherHelper from "../../../general/helpers/PusherHelper";
 
 RoomsListScreen.propTypes = {};
 
@@ -33,6 +37,11 @@ function RoomsListScreen(props) {
     const deviceListOfCurrentRoom = devicesListOfHome?.filter(
         (device) => device.roomId === selected
     );
+
+    PusherHelper.Subscribe("device", "device-data", (d) => {
+        const deviceData = d.deviceData;
+        dispatch(updateDevicesListOfHome(deviceData));
+    });
 
     useEffect(() => {
         document.title = "Trang danh sách phòng | SHOME";
@@ -98,11 +107,11 @@ function RoomsListScreen(props) {
                                     {deviceListOfCurrentRoom?.filter(
                                         (device) =>
                                             device.deviceType ===
-                                                "Cảm biến nhiệt độ" ||
+                                                "Nhiệt độ, độ ẩm" ||
                                             device.deviceType ===
                                                 "Cảm biến khói" ||
                                             device.deviceType ===
-                                                "Cảm biến độ ẩm" ||
+                                                "Cảm biến ánh sáng" ||
                                             device.deviceType ===
                                                 "Cảm biến động tĩnh"
                                     ).length > 0 && (
@@ -110,11 +119,11 @@ function RoomsListScreen(props) {
                                             sensorsList={deviceListOfCurrentRoom?.filter(
                                                 (device) =>
                                                     device.deviceType ===
-                                                        "Cảm biến nhiệt độ" ||
+                                                        "Nhiệt độ, độ ẩm" ||
                                                     device.deviceType ===
                                                         "Cảm biến khói" ||
                                                     device.deviceType ===
-                                                        "Cảm biến độ ẩm" ||
+                                                        "Cảm biến ánh sáng" ||
                                                     device.deviceType ===
                                                         "Cảm biến động tĩnh"
                                             )}
@@ -141,22 +150,7 @@ function RoomsListScreen(props) {
                                             )}
                                         />
                                     )}
-                                    {deviceListOfCurrentRoom?.filter(
-                                        (device) =>
-                                            device.deviceType === "Camera"
-                                    ).length > 0 &&
-                                        deviceListOfCurrentRoom
-                                            ?.filter(
-                                                (device) =>
-                                                    device.deviceType ===
-                                                    "Camera"
-                                            )
-                                            .map((item) => (
-                                                <Camera
-                                                    key={item._id}
-                                                    deviceItem={item}
-                                                />
-                                            ))}
+
                                     {deviceListOfCurrentRoom?.filter(
                                         (device) =>
                                             device.deviceType === "Máy lạnh"
@@ -173,27 +167,6 @@ function RoomsListScreen(props) {
                                                     deviceItem={item}
                                                 />
                                             ))}
-
-                                    {deviceListOfCurrentRoom?.filter(
-                                        (device) =>
-                                            device.deviceType ===
-                                                "Chuông chống trộm" ||
-                                            device.deviceType === "Khóa cửa" ||
-                                            device.deviceType ===
-                                                "Két sắt an toàn"
-                                    ).length > 0 && (
-                                        <Security
-                                            devicesList={deviceListOfCurrentRoom?.filter(
-                                                (device) =>
-                                                    device.deviceType ===
-                                                        "Chuông chống trộm" ||
-                                                    device.deviceType ===
-                                                        "Khóa cửa" ||
-                                                    device.deviceType ===
-                                                        "Két sắt an toàn"
-                                            )}
-                                        />
-                                    )}
                                     {deviceListOfCurrentRoom?.filter(
                                         (device) =>
                                             device.deviceType === "Quạt" ||
@@ -230,18 +203,44 @@ function RoomsListScreen(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        // <ElectricalDevice
-                                        //     devicesList={deviceListOfCurrentRoom?.filter(
-                                        //         (device) =>
-                                        //             device.deviceType ===
-                                        //                 "Quạt" ||
-                                        //             device.deviceType ===
-                                        //                 "Máy lọc không khí" ||
-                                        //             device.deviceType ===
-                                        //                 "Máy hút ẩm"
-                                        //     )}
-                                        // />
                                     )}
+                                    {deviceListOfCurrentRoom?.filter(
+                                        (device) =>
+                                            device.deviceType ===
+                                                "Chuông chống trộm" ||
+                                            device.deviceType === "Khóa cửa" ||
+                                            device.deviceType ===
+                                                "Két sắt an toàn"
+                                    ).length > 0 && (
+                                        <Security
+                                            devicesList={deviceListOfCurrentRoom?.filter(
+                                                (device) =>
+                                                    device.deviceType ===
+                                                        "Chuông chống trộm" ||
+                                                    device.deviceType ===
+                                                        "Khóa cửa" ||
+                                                    device.deviceType ===
+                                                        "Két sắt an toàn"
+                                            )}
+                                        />
+                                    )}
+                                    {deviceListOfCurrentRoom?.filter(
+                                        (device) =>
+                                            device.deviceType === "Camera"
+                                    ).length > 0 &&
+                                        deviceListOfCurrentRoom
+                                            ?.filter(
+                                                (device) =>
+                                                    device.deviceType ===
+                                                    "Camera"
+                                            )
+                                            .map((item) => (
+                                                <Camera
+                                                    key={item._id}
+                                                    deviceItem={item}
+                                                />
+                                            ))}
+
                                     {deviceListOfCurrentRoom?.filter(
                                         (device) =>
                                             device.deviceType === "Công tắc" ||

@@ -9,4 +9,25 @@
         font-weight: 500;
         color: #bdbdbd;
     }
+    .iconSetting {
+        --fa-primary-opacity: 1;
+        --fa-secondary-opacity: 0.5;
+        transition: all 0.5s ease;
+        &:hover {
+            animation: spin 2s infinite linear;
+            color: #3e97ff;
+            --fa-primary-opacity: 0;
+            --fa-secondary-opacity: 1;
+        }
+    }
+    @keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
 }

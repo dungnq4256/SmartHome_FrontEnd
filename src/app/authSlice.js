@@ -9,7 +9,6 @@ export const thunkSignIn = createAsyncThunk(
     "auth/sign-in",
     async (params, thunkApi) => {
         const res = await authApi.signIn(params);
-        console.log(res);
         return res;
     }
 );

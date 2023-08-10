@@ -25,40 +25,58 @@ function ElectricalDevice(props) {
     const renderRoomName = (id) =>
         roomsList?.filter((room) => room._id === id)[0]?.roomName;
 
-        useEffect(() => {
-            const handleControlED = async () => {
-                await dispatch(
+    useEffect(() => {
+        setControlED(deviceItem?.control?.status);
+        setMode(deviceItem?.control?.intensity);
+    }, [deviceItem]);
+    useEffect(() => {
+        const handleControlED = async () => {
+            await dispatch(
+                thunkControlDevice({
+                    deviceId: deviceItem._id,
+                    control: {
+                        ...deviceItem?.control,
+                        status: controlED,
+                        intensity: mode,
+                        lightAuto: false,
+                        timerAuto: false,
+                    },
+                    automatic: deviceItem.automatic,
+                })
+            );
+        };
+        if (
+            deviceItem.control.lightAuto === false &&
+            deviceItem.control.timerAuto === false
+        )
+            handleControlED();
+
+        return () => {};
+    }, [controlED]);
+
+    useEffect(() => {
+        const handleControlEDD = async () => {
+            deviceItem?.control?.status &&
+                (await dispatch(
                     thunkControlDevice({
                         deviceId: deviceItem._id,
                         control: {
-                            status: controlED,
+                            ...deviceItem?.control,
+                            status: true,
                             intensity: mode,
                         },
+                        automatic: deviceItem.automatic,
                     })
-                );
-            };
-            handleControlED();
-    
-            return () => {};
-        }, [controlED]);
-    
-        useEffect(() => {
-            const handleControlEDD = async () => {
-                deviceItem?.control?.status &&
-                    (await dispatch(
-                        thunkControlDevice({
-                            deviceId: deviceItem._id,
-                            control: {
-                                status: true,
-                                intensity: mode,
-                            },
-                        })
-                    ));
-            };
+                ));
+        };
+        if (
+            deviceItem.control.lightAuto === false &&
+            deviceItem.control.timerAuto === false
+        )
             handleControlEDD();
-    
-            return () => {};
-        }, [mode]);
+
+        return () => {};
+    }, [mode]);
 
     return (
         <div className="ElectricalDevice col-12">
@@ -83,30 +101,53 @@ function ElectricalDevice(props) {
                                 {renderRoomName(deviceItem?.roomId)}
                             </span>
                         )}
+                        {deviceItem?.control?.lightAuto && (
+                            <span
+                                style={{
+                                    fontSize: "0.85rem",
+                                    fontWeight: "500",
+                                    color: "#d10000",
+                                    fontStyle: "italic",
+                                }}
+                            >
+                                {" - "}
+                                Tự động bật ( Cường độ ánh sáng {">"}{" "}
+                                {deviceItem?.automatic?.lightValue} )
+                            </span>
+                        )}
+                        {deviceItem?.control?.timerAuto && (
+                            <span
+                                style={{
+                                    fontSize: "0.85rem",
+                                    fontWeight: "500",
+                                    color: "#d10000",
+                                    fontStyle: "italic",
+                                }}
+                            >
+                                {" - "}
+                                Tự động ( Từ{" "}
+                                {deviceItem?.automatic?.hourFrom < 10
+                                    ? "0" + deviceItem?.automatic?.hourFrom
+                                    : deviceItem?.automatic?.hourFrom}
+                                :
+                                {deviceItem?.automatic?.minuteFrom < 10
+                                    ? "0" + deviceItem?.automatic?.minuteFrom
+                                    : deviceItem?.automatic?.minuteFrom}{" "}
+                                -{">"}{" "}
+                                {deviceItem?.automatic?.hourTo < 10
+                                    ? "0" + deviceItem?.automatic?.hourTo
+                                    : deviceItem?.automatic?.hourTo}
+                                :
+                                {deviceItem?.automatic?.minuteTo < 10
+                                    ? "0" + deviceItem?.automatic?.minuteTo
+                                    : deviceItem?.automatic?.minuteTo}{" "}
+                                hàng ngày )
+                            </span>
+                        )}
                     </div>
                     <div className="ElectricalDevice_Type">
                         <p className="mt-2 mb-1">Chế độ</p>
                         <div>
-                            <button
-                                className={`${
-                                    mode === 200
-                                        ? "ButtonPrimary"
-                                        : "ButtonCancel"
-                                } me-2`}
-                                onClick={() => setMode(200)}
-                            >
-                                1
-                            </button>
-                            <button
-                                className={`${
-                                    mode === 500
-                                        ? "ButtonPrimary"
-                                        : "ButtonCancel"
-                                } me-2`}
-                                onClick={() => setMode(500)}
-                            >
-                                2
-                            </button>
                             <button
                                 className={`${
                                     mode === 800
@@ -114,6 +155,26 @@ function ElectricalDevice(props) {
                                         : "ButtonCancel"
                                 } me-2`}
                                 onClick={() => setMode(800)}
+                            >
+                                1
+                            </button>
+                            <button
+                                className={`${
+                                    mode === 4400
+                                        ? "ButtonPrimary"
+                                        : "ButtonCancel"
+                                } me-2`}
+                                onClick={() => setMode(4400)}
+                            >
+                                2
+                            </button>
+                            <button
+                                className={`${
+                                    mode === 8000
+                                        ? "ButtonPrimary"
+                                        : "ButtonCancel"
+                                } me-2`}
+                                onClick={() => setMode(8000)}
                             >
                                 3
                             </button>

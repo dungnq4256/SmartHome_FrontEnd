@@ -32,10 +32,14 @@ function AirConditioner(props) {
     const [controlAC, setControlAC] = useState(deviceItem?.control?.status);
     const [controlAutoAC, setControlAutoAC] = useState(false);
     const [value, setValue] = useState(
-        (deviceItem?.control?.intensity - 200) / 800
+        (deviceItem?.control?.intensity - 800) / 7200
     );
-   
     const stepValue = (v) => Math.round(v * 16) / 16;
+
+    useEffect(() => {
+        setControlAC(deviceItem?.control?.status);
+        setValue((deviceItem?.control?.intensity - 800) / 7200);
+    }, [deviceItem]);
 
     useEffect(() => {
         const handleControlAC = async () => {
@@ -43,14 +47,21 @@ function AirConditioner(props) {
                 thunkControlDevice({
                     deviceId: deviceItem._id,
                     control: {
+                        ...deviceItem.control,
                         status: controlAC,
-                        intensity: value * 800 + 200,
+                        intensity: value * 7200 + 800,
+                        lightAuto: false,
+                        timerAuto: false,
                     },
+                    automatic: deviceItem.automatic,
                 })
             );
         };
-        handleControlAC();
-
+        if (
+            deviceItem.control.lightAuto === false &&
+            deviceItem.control.timerAuto === false
+        )
+            handleControlAC();
         return () => {};
     }, [controlAC]);
 
@@ -61,9 +72,11 @@ function AirConditioner(props) {
                     thunkControlDevice({
                         deviceId: deviceItem._id,
                         control: {
+                            ...deviceItem.control,
                             status: true,
-                            intensity: value * 800 + 200,
+                            intensity: value * 7200 + 800,
                         },
+                        automatic: deviceItem.automatic,
                     })
                 ));
         };
@@ -88,6 +101,49 @@ function AirConditioner(props) {
                             >
                                 {" - "}
                                 {renderRoomName(deviceItem.roomId)}
+                            </span>
+                        )}
+                        {deviceItem?.control?.lightAuto && (
+                            <span
+                                style={{
+                                    fontSize: "0.85rem",
+                                    fontWeight: "500",
+                                    color: "#d10000",
+                                    fontStyle: "italic",
+                                }}
+                            >
+                                {" - "}
+                                Tự động bật ( Cường độ ánh sáng {">"}{" "}
+                                {deviceItem?.automatic?.lightValue} )
+                            </span>
+                        )}
+                        {deviceItem?.control?.timerAuto && (
+                            <span
+                                style={{
+                                    fontSize: "0.85rem",
+                                    fontWeight: "500",
+                                    color: "#d10000",
+                                    fontStyle: "italic",
+                                }}
+                            >
+                                {" - "}
+                                Tự động ( Từ{" "}
+                                {deviceItem?.automatic?.hourFrom < 10
+                                    ? "0" + deviceItem?.automatic?.hourFrom
+                                    : deviceItem?.automatic?.hourFrom}
+                                :
+                                {deviceItem?.automatic?.minuteFrom < 10
+                                    ? "0" + deviceItem?.automatic?.minuteFrom
+                                    : deviceItem?.automatic?.minuteFrom}{" "}
+                                -{">"}{" "}
+                                {deviceItem?.automatic?.hourTo < 10
+                                    ? "0" + deviceItem?.automatic?.hourTo
+                                    : deviceItem?.automatic?.hourTo}
+                                :
+                                {deviceItem?.automatic?.minuteTo < 10
+                                    ? "0" + deviceItem?.automatic?.minuteTo
+                                    : deviceItem?.automatic?.minuteTo}{" "}
+                                hàng ngày )
                             </span>
                         )}
                     </div>

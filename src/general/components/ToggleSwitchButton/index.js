@@ -16,25 +16,26 @@ ToggleSwitchButton.defaultProps = {
 function ToggleSwitchButton(props) {
     const { deviceItem } = props;
     const dispatch = useDispatch();
-    const [controlDevice, setControlDevice] = useState(
-        deviceItem?.control?.status
-    );
-
-
+    const [controlDevice, setControlDevice] = useState(false);
+    useEffect(() => {
+        setControlDevice(deviceItem?.control?.status);
+    }, [deviceItem?.control?.status]);
     return (
         <div className="d-flex">
             <label className="switchh my-auto">
                 <input
                     type="checkbox"
-                    checked={controlDevice ?? false}
-                    onChange={async() => {
+                    checked={controlDevice}
+                    onChange={async () => {
                         setControlDevice(!controlDevice);
                         await dispatch(
                             thunkControlDevice({
                                 deviceId: deviceItem._id,
                                 control: {
+                                    ...deviceItem?.control,
                                     status: !controlDevice,
                                 },
+                                automatic: deviceItem.automatic,
                             })
                         );
                     }}

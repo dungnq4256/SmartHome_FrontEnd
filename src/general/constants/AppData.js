@@ -13,6 +13,30 @@ const AppData = {
         { value: "sensor", text: "Cảm biến" },
         { value: "electricalEquipment", text: "Thiết bị điện môi trường" },
     ],
+    temperatureOption: [
+        { value: "800", text: "16°C" },
+        { value: "1250", text: "17°C" },
+        { value: "1700", text: "18°C" },
+        { value: "2150", text: "19°C" },
+        { value: "2600", text: "20°C" },
+        { value: "3050", text: "21°C" },
+        { value: "3500", text: "22°C" },
+        { value: "3950", text: "23°C" },
+        { value: "4400", text: "24°C" },
+        { value: "4850", text: "24°C" },
+        { value: "5300", text: "26°C" },
+        { value: "5750", text: "27°C" },
+        { value: "6200", text: "28°C" },
+        { value: "6650", text: "29°C" },
+        { value: "7100", text: "30°C" },
+        { value: "7550", text: "31°C" },
+        { value: "8000", text: "32°C" },
+    ],
+    fanOptions: [
+        { value: "800", text: "Chế độ 1" },
+        { value: "4400", text: "Chế độ 2" },
+        { value: "8000", text: "Chế độ 3" },
+    ],
     security: [
         {
             value: "Camera",
@@ -71,19 +95,19 @@ const AppData = {
     ],
     sensor: [
         {
-            value: "Cảm biến nhiệt độ",
-            text: "Cảm biến nhiệt độ",
+            value: "Nhiệt độ, độ ẩm",
+            text: "Nhiệt độ, độ ẩm",
             image: require("../../assets/images/nhietdo.png"),
+        },
+        {
+            value: "Cảm biến ánh sáng",
+            text: "Cảm biến ánh sáng",
+            image: require("../../assets/images/anhsang.png"),
         },
         {
             value: "Cảm biến khói",
             text: "Cảm biến khói",
             image: require("../../assets/images/khoi.png"),
-        },
-        {
-            value: "Cảm biến độ ẩm",
-            text: "Cảm biến độ ẩm",
-            image: require("../../assets/images/nhietdo.png"),
         },
         {
             value: "Cảm biến động tĩnh",

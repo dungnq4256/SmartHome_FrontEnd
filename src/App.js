@@ -1,5 +1,5 @@
 // Toast
-import React from 'react'
+import React from "react";
 import { Suspense, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 // router
@@ -16,11 +16,10 @@ import DevicesListScreen from "features/Device/DevicesListScreen";
 import Dashboard from "features/Dashboard";
 import AccountListener from "features/Account/AccountListener";
 import Account from "features/Account";
-import HomeListener from 'features/Home/HomeListener';
-import AppToast from 'general/components/AppToast';
-import PrivateRoute from 'general/components/AppRoutes/PrivateRoute';
-import RequestToResetPass from 'features/Auth/RequestToResetPass';
-
+import HomeListener from "features/Home/HomeListener";
+import AppToast from "general/components/AppToast";
+import PrivateRoute from "general/components/AppRoutes/PrivateRoute";
+import RequestToResetPass from "features/Auth/RequestToResetPass";
 // Load BS
 
 require("bootstrap/dist/js/bootstrap.min");
@@ -146,7 +145,7 @@ function App() {
 
                         {/* Request to reset pass */}
                         <Route
-                            path='/request-to-reset-pass'
+                            path="/request-to-reset-pass"
                             element={
                                 <GuestRoute>
                                     <RequestToResetPass />

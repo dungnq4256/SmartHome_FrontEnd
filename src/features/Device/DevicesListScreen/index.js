@@ -56,9 +56,9 @@ function DevicesListScreen(props) {
                         <div className="row">
                             {devicesListOfHome?.filter(
                                 (device) =>
-                                    device.deviceType === "Cảm biến nhiệt độ" ||
+                                    device.deviceType === "Nhiệt độ, độ ẩm" ||
+                                    device.deviceType === "Cảm biến ánh sáng" ||
                                     device.deviceType === "Cảm biến khói" ||
-                                    device.deviceType === "Cảm biến độ ẩm" ||
                                     device.deviceType === "Cảm biến động tĩnh"
                             ).length > 0 && (
                                 <Sensor
@@ -66,11 +66,11 @@ function DevicesListScreen(props) {
                                     sensorsList={devicesListOfHome?.filter(
                                         (device) =>
                                             device.deviceType ===
-                                                "Cảm biến nhiệt độ" ||
+                                                "Nhiệt độ, độ ẩm" ||
                                             device.deviceType ===
                                                 "Cảm biến khói" ||
                                             device.deviceType ===
-                                                "Cảm biến độ ẩm" ||
+                                                "Cảm biến ánh sáng" ||
                                             device.deviceType ===
                                                 "Cảm biến động tĩnh"
                                     )}

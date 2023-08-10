@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import DialogModal from "../DialogModal";
 import "./style.scss";
+import { setIsOpenControlDeviceModal } from "features/Device/deviceSlice";
 
 SideBar.propTypes = {
     className: PropTypes.string,
@@ -147,6 +148,25 @@ function SideBar(props) {
                                 }`}
                             >
                                 Danh sách thiết bị
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        onClick={() =>
+                            dispatch(setIsOpenControlDeviceModal(true))
+                        }
+                    >
+                        <div
+                            className={`MenuItem d-flex align-items-center`}
+                            title="Điều khiển tự động"
+                        >
+                            <i className="fad fa-cog"></i>
+                            <div
+                                className={`MenuItemName ${
+                                    !showSideBar && "SideBar_active"
+                                }`}
+                            >
+                                Điều khiển tự động
                             </div>
                         </div>
                     </div>
